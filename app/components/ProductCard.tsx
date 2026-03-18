@@ -6,7 +6,7 @@ export default function ProductCard({ produto }: any) {
  const enviarAviso = async () => {
    const email = prompt("Digite seu email:");
    const whatsapp = prompt("Digite seu WhatsApp:");
-   await fetch("https://SUA_API/aviso", {
+   await fetch("https://cs-store-api-production.up.railway.app/aviso", {
      method: "POST",
      headers: {
        "Content-Type": "application/json"
@@ -23,7 +23,7 @@ export default function ProductCard({ produto }: any) {
  const enviarFeedback = async () => {
    const qualidade = prompt("Qualidade do tecido (1 a 5):");
    const preco = prompt("Preço justo (1 a 5):");
-   await fetch("https://SUA_API/feedback", {
+   await fetch("https://cs-store-api-production.up.railway.app/feedback", {
      method: "POST",
      headers: {
        "Content-Type": "application/json"
