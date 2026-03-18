@@ -2,8 +2,40 @@
 import { useState } from "react";
 export default function ProductCard({ produto }: any) {
  const [tamanho, setTamanho] = useState("");
- const linkCompra = `https://wa.me/5511972734037?text=Quero%20comprar:%20${produto.nome}%20Tamanho:%20${tamanho}`;
- const linkPersonalizar = `https://wa.me/5511972734037?text=Quero%20personalizar:%20${produto.nome}`;
+ const linkCompra = `https://wa.me/5511972734037?text=Quero comprar: ${produto.nome} Tamanho: ${tamanho}`;
+ const enviarAviso = async () => {
+   const email = prompt("Digite seu email:");
+   const whatsapp = prompt("Digite seu WhatsApp:");
+   await fetch("https://SUA_API/aviso", {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+     },
+     body: JSON.stringify({
+       produto_id: produto.id,
+       tamanho,
+       email,
+       whatsapp
+     })
+   });
+   alert("Aviso cadastrado!");
+ };
+ const enviarFeedback = async () => {
+   const qualidade = prompt("Qualidade do tecido (1 a 5):");
+   const preco = prompt("Preço justo (1 a 5):");
+   await fetch("https://SUA_API/feedback", {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+     },
+     body: JSON.stringify({
+       produto_id: produto.id,
+       qualidade_tecido: Number(qualidade),
+       preco_justo: Number(preco)
+     })
+   });
+   alert("Obrigado pelo feedback!");
+ };
  return (
 <div style={{
      border: "1px solid #eee",
@@ -15,7 +47,11 @@ export default function ProductCard({ produto }: any) {
      {/* PREÇO */}
 <div>
        {produto.preco_antigo && (
-<span style={{ textDecoration: "line-through", marginRight: "8px" }}>
+<span style={{
+           textDecoration: "line-through",
+           marginRight: "8px",
+           color: "#999"
+         }}>
            R$ {produto.preco_antigo}
 </span>
        )}
@@ -33,28 +69,42 @@ export default function ProductCard({ produto }: any) {
              marginTop: "5px",
              padding: "5px",
              background: tamanho === v.tamanho ? "black" : "#eee",
-             color: tamanho === v.tamanho ? "white" : "black"
+             color: tamanho === v.tamanho ? "white" : "black",
+             cursor: "pointer"
            }}
 >
            {v.tamanho}
 </button>
        ))}
 </div>
-     {/* BOTÕES */}
+     {/* COMPRAR */}
 <a href={linkCompra} target="_blank">
-<button style={{ width: "100%", marginTop: "10px", background: "black", color: "white" }}>
+<button style={{
+         width: "100%",
+         marginTop: "10px",
+         background: "black",
+         color: "white",
+         padding: "8px",
+         border: "none"
+       }}>
          Comprar no WhatsApp
 </button>
 </a>
-<a href={linkPersonalizar} target="_blank">
+     {/* PERSONALIZAR */}
+<a
+       href={`https://wa.me/5511972734037?text=Quero personalizar: ${produto.nome}`}
+       target="_blank"
+>
 <button style={{ width: "100%", marginTop: "5px" }}>
          🎨 Personalizar
 </button>
 </a>
-<button style={{ width: "100%", marginTop: "5px" }}>
-       🔔 Avise-me quando chegar
+     {/* AVISO */}
+<button onClick={enviarAviso} style={{ width: "100%", marginTop: "5px" }}>
+       🔔 Avise-me
 </button>
-<button style={{ width: "100%", marginTop: "5px" }}>
+     {/* FEEDBACK */}
+<button onClick={enviarFeedback} style={{ width: "100%", marginTop: "5px" }}>
        ⭐ Avaliar produto
 </button>
 </div>
