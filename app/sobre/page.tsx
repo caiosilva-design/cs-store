@@ -3,20 +3,13 @@ export default function Sobre() {
 <div style={{ padding: "40px", maxWidth: "800px", margin: "auto" }}>
 <h1>Sobre a CS Store</h1>
 <p>
-       A CS Store nasceu com o objetivo de trazer estilo, qualidade e identidade
-       para quem vive o esporte e a cultura street.
+       A CS Store nasceu com o objetivo de unir estilo, qualidade e identidade.
 </p>
 <p>
-       Trabalhamos com peças selecionadas, com foco em conforto, design e
-       exclusividade. Cada produto é pensado para quem quer se destacar.
+       Trabalhamos com peças exclusivas inspiradas no streetwear e esporte.
 </p>
 <p>
-       Nosso compromisso é simples: entregar qualidade, confiança e uma
-       experiência de compra direta e rápida.
-</p>
-<p>
-       📲 WhatsApp: (11) 97273-4037 <br />
-       📸 Instagram: @criastudio.store
+       Aqui você não compra só roupa, você veste atitude.
 </p>
 </div>
  );
