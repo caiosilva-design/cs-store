@@ -1,6 +1,6 @@
 import ProductCard from "../components/ProductCard";
 async function getProdutos() {
- const res = await fetch("https://SUA_API/produtos", {
+ const res = await fetch("https://cs-store-api-production.up.railway.app/produtos", {
    cache: "no-store",
  });
  return res.json();
