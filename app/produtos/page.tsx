@@ -6,7 +6,7 @@ export default function Produtos() {
  const [busca, setBusca] = useState("");
  const [tamanhoFiltro, setTamanhoFiltro] = useState("");
  useEffect(() => {
-   fetch("https://cs-store-api.up.railway.app/produtos")
+   fetch("https://cs-store-api-production.up.railway.app/produtos")
      .then((res) => res.json())
      .then(setProdutos);
  }, []);
