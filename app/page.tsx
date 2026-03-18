@@ -1,5 +1,5 @@
 async function getProdutos() {
- const res = await fetch("https://SUA_API_AQUI/produtos", {
+ const res = await fetch("https://cs-store-api-production.up.railway.app/produtos", {
    cache: "no-store",
  });
  return res.json();
