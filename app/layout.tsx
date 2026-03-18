@@ -2,7 +2,7 @@ import Navbar from "./components/Navbar";
 import WhatsappButton from "./components/WhatsappButton";
 export default function RootLayout({ children }: any) {
  return (
-<html>
+<html lang="pt-BR">
 <body>
 <Navbar />
        {children}
