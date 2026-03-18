@@ -1,25 +1,22 @@
-import ProductCard from "./components/ProductCard";
-async function getProdutos() {
- const res = await fetch("https://cs-store-api-production.up.railway.app/produtos", {
-   cache: "no-store",
- });
- return res.json();
-}
-export default async function Home() {
- const produtos = await getProdutos();
+export default function Home() {
  return (
-<div style={{ padding: "40px" }}>
+<div style={{ padding: "40px", textAlign: "center" }}>
 <h1>🔥 CS STORE</h1>
-<div
-       style={{
-         display: "grid",
-         gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-         gap: "20px",
-       }}
->
-       {produtos.map((p: any) => (
-<ProductCard key={p.id} produto={p} />
-       ))}
+<p style={{ marginTop: "10px" }}>
+       Estilo, identidade e atitude em cada peça.
+</p>
+<div style={{ marginTop: "30px" }}>
+<a href="/produtos">
+<button style={{
+           padding: "12px 20px",
+           background: "black",
+           color: "white",
+           border: "none",
+           cursor: "pointer"
+         }}>
+           Ver Catálogo
+</button>
+</a>
 </div>
 </div>
  );
