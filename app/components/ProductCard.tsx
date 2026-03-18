@@ -29,7 +29,7 @@ export default function ProductCard({ produto }: any) {
      alert("Preencha todos os dados");
      return;
    }
-   await fetch("https://cs-store-api.up.railway.app/aviso", {
+   await fetch("https://cs-store-api-production.up.railway.app/aviso", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export default function ProductCard({ produto }: any) {
      alert("Preencha os dados");
      return;
    }
-   await fetch("https://cs-store-api.up.railway.app/feedback", {
+   await fetch("https://cs-store-api-production.up.railway.app/feedback", {
      method: "POST",
      headers: {
        "Content-Type": "application/json",
