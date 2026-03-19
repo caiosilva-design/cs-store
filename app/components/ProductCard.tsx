@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 export default function ProductCard({ produto }: any) {
  const [tamanho, setTamanho] = useState("");
- // ============================
  // 🛒 COMPRAR
- // ============================
- const comprar = () => {
+ const comprar = (e: any) => {
+   e.stopPropagation();
    if (!tamanho) {
      alert("⚠️ Selecione um tamanho primeiro");
      return;
@@ -15,10 +15,9 @@ export default function ProductCard({ produto }: any) {
      `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`
    );
  };
- // ============================
  // 🔔 AVISO
- // ============================
- const enviarAviso = async () => {
+ const enviarAviso = async (e: any) => {
+   e.stopPropagation();
    if (!tamanho) {
      alert("⚠️ Escolha um tamanho primeiro");
      return;
@@ -43,10 +42,9 @@ export default function ProductCard({ produto }: any) {
    });
    alert("🔔 Aviso cadastrado com sucesso!");
  };
- // ============================
  // ⭐ FEEDBACK
- // ============================
- const enviarFeedback = async () => {
+ const enviarFeedback = async (e: any) => {
+   e.stopPropagation();
    const qualidade = prompt("Qualidade do tecido (1 a 5):");
    const preco = prompt("Preço justo (1 a 5):");
    if (!qualidade || !preco) {
@@ -67,110 +65,95 @@ export default function ProductCard({ produto }: any) {
    alert("⭐ Obrigado pelo feedback!");
  };
  return (
+<Link href={`/produto/${produto.id}`} style={{ textDecoration: "none" }}>
 <div
-     style={{
-       border: "1px solid #eee",
-       padding: "10px",
-       borderRadius: "10px",
-     }}
+       style={{
+         border: "1px solid rgba(255,255,255,0.1)",
+         padding: "12px",
+         borderRadius: "12px",
+         background: "rgba(255,255,255,0.03)",
+         transition: "0.3s",
+         cursor: "pointer",
+       }}
 >
-     {/* IMAGEM */}
+       {/* IMAGEM */}
 <img
-       src={produto.imagem}
-       style={{
-         width: "100%",
-         height: "200px",
-         objectFit: "cover",
-       }}
-     />
-     {/* NOME */}
-<h3>{produto.nome}</h3>
-     {/* PREÇO */}
+         src={produto.imagem}
+         style={{
+           width: "100%",
+           height: "200px",
+           objectFit: "cover",
+           borderRadius: "8px",
+         }}
+       />
+       {/* NOME */}
+<h3 style={{ color: "white" }}>{produto.nome}</h3>
+       {/* PREÇO */}
 <div>
-       {produto.preco_antigo && (
+         {produto.preco_antigo && (
 <span
-           style={{
-             textDecoration: "line-through",
-             marginRight: "8px",
-             color: "#999",
-           }}
+             style={{
+               textDecoration: "line-through",
+               marginRight: "8px",
+               color: "#999",
+             }}
 >
-           R$ {produto.preco_antigo}
+             R$ {produto.preco_antigo}
 </span>
-       )}
-<strong>R$ {produto.preco}</strong>
+         )}
+<strong style={{ color: "#FFD700" }}>
+           R$ {produto.preco}
+</strong>
 </div>
-     {/* TAMANHOS */}
+       {/* TAMANHOS */}
 <div style={{ marginTop: "10px" }}>
-       {produto.variacoes?.map((v: any, i: number) => (
+         {produto.variacoes?.map((v: any, i: number) => (
 <button
-           key={i}
-           disabled={!v.disponivel}
-           onClick={() => setTamanho(v.tamanho)}
-           style={{
-             marginRight: "5px",
-             marginTop: "5px",
-             padding: "5px",
-             background: tamanho === v.tamanho ? "black" : "#eee",
-             color: tamanho === v.tamanho ? "white" : "black",
-             border:
-               tamanho === v.tamanho
-                 ? "2px solid black"
-                 : "1px solid #ccc",
-             cursor: v.disponivel ? "pointer" : "not-allowed",
-             opacity: v.disponivel ? 1 : 0.4,
-           }}
+             key={i}
+             disabled={!v.disponivel}
+             onClick={(e) => {
+               e.preventDefault();
+               setTamanho(v.tamanho);
+             }}
+             style={{
+               marginRight: "5px",
+               marginTop: "5px",
+               padding: "5px",
+               background: tamanho === v.tamanho ? "black" : "#eee",
+               color: tamanho === v.tamanho ? "white" : "black",
+               border:
+                 tamanho === v.tamanho
+                   ? "2px solid black"
+                   : "1px solid #ccc",
+               cursor: v.disponivel ? "pointer" : "not-allowed",
+               opacity: v.disponivel ? 1 : 0.4,
+             }}
 >
-           {v.tamanho}
+             {v.tamanho}
 </button>
-       ))}
+         ))}
 </div>
-     {/* TAMANHO SELECIONADO */}
-     {tamanho && (
-<p style={{ fontSize: "12px", marginTop: "5px" }}>
-         Tamanho selecionado: <strong>{tamanho}</strong>
-</p>
-     )}
-     {/* BOTÃO COMPRAR */}
+       {/* BOTÕES */}
 <button
-       onClick={comprar}
-       style={{
-         width: "100%",
-         marginTop: "10px",
-         background: tamanho ? "black" : "#aaa",
-         color: "white",
-         padding: "8px",
-         border: "none",
-         cursor: tamanho ? "pointer" : "not-allowed",
-       }}
+         onClick={comprar}
+         style={{
+           width: "100%",
+           marginTop: "10px",
+           background: tamanho ? "black" : "#aaa",
+           color: "white",
+           padding: "8px",
+           border: "none",
+         }}
 >
-       🔥 Comprar agora
+         🔥 Comprar agora
 </button>
-     {/* PERSONALIZAR */}
-<a
-       href={`https://wa.me/5511972734037?text=${encodeURIComponent(
-         `Quero personalizar: ${produto.nome}`
-       )}`}
-       target="_blank"
->
-<button style={{ width: "100%", marginTop: "5px" }}>
-         🎨 Personalizar
+<button onClick={enviarAviso} style={{ width: "100%", marginTop: "5px" }}>
+         🔔 Avise-me
 </button>
-</a>
-     {/* AVISO */}
-<button
-       onClick={enviarAviso}
-       style={{ width: "100%", marginTop: "5px" }}
->
-       🔔 Avise-me
-</button>
-     {/* FEEDBACK */}
-<button
-       onClick={enviarFeedback}
-       style={{ width: "100%", marginTop: "5px" }}
->
-       ⭐ Avaliar produto
+<button onClick={enviarFeedback} style={{ width: "100%", marginTop: "5px" }}>
+         ⭐ Avaliar produto
 </button>
 </div>
+</Link>
  );
 }
