@@ -6,17 +6,17 @@ export default function Navbar() {
      position: "fixed",
      top: 0,
      width: "100%",
-     zIndex: 999, // 🔥 MUITO IMPORTANTE
+     zIndex: 999,
      display: "flex",
      justifyContent: "space-between",
      alignItems: "center",
      padding: "20px 40px",
      background: "rgba(0,0,0,0.8)",
-     backdropFilter: "blur(8px)"
+     backdropFilter: "blur(10px)"
    }}>
      {/* LOGO */}
 <Link href="/">
-<Image src="/logo.png" alt="logo" width={45} height={45} />
+<Image src="/logo.png" alt="logo" width={40} height={40} />
 </Link>
      {/* MENU */}
 <div style={{ display: "flex", gap: "25px", color: "white" }}>
