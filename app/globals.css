@@ -1,21 +1,29 @@
+/* ========================= */
 /* RESET BASE */
+/* ========================= */
 * {
  margin: 0;
  padding: 0;
  box-sizing: border-box;
 }
+/* ========================= */
 /* BODY */
+/* ========================= */
 body {
  background: #000;
  color: white;
  font-family: Arial, sans-serif;
  overflow-x: hidden;
 }
-/* 🔥 SCROLL SUAVE */
+/* ========================= */
+/* SCROLL SUAVE */
+/* ========================= */
 html {
  scroll-behavior: smooth;
 }
-/* 🔥 SCROLLBAR PREMIUM */
+/* ========================= */
+/* SCROLLBAR PREMIUM */
+/* ========================= */
 ::-webkit-scrollbar {
  width: 8px;
 }
@@ -27,7 +35,7 @@ html {
  border-radius: 10px;
 }
 /* ========================= */
-/* 🔥 CARD PRODUTO (SEU + UPGRADE) */
+/* CARD PRODUTO */
 /* ========================= */
 .cardProduto {
  position: relative;
@@ -45,7 +53,6 @@ html {
  object-fit: cover;
  transition: transform 0.5s ease;
 }
-/* 🔥 OVERLAY MELHORADO */
 .cardProduto .overlay {
  position: absolute;
  inset: 0;
@@ -55,7 +62,6 @@ html {
    rgba(0,0,0,0.3)
  );
 }
-/* 🔥 NOME */
 .cardProduto span {
  position: absolute;
  bottom: 50px;
@@ -66,7 +72,6 @@ html {
  max-width: 80%;
  line-height: 1.2;
 }
-/* 🔥 PREÇO */
 .cardProduto .preco {
  position: absolute;
  bottom: 20px;
@@ -76,7 +81,6 @@ html {
  z-index: 2;
  font-size: 16px;
 }
-/* 🔥 HOVER */
 .cardProduto:hover img {
  transform: scale(1.12);
 }
@@ -84,7 +88,7 @@ html {
  transform: translateY(-6px);
 }
 /* ========================= */
-/* 🔥 BOTÃO GOLD (SEU + UPGRADE) */
+/* BOTÃO GOLD */
 /* ========================= */
 .btnGold {
  background: #FFD700;
@@ -98,19 +102,34 @@ html {
  box-shadow: 0 0 20px rgba(255,215,0,0.25);
  transition: all 0.3s ease;
 }
-/* 🔥 HOVER BOTÃO */
 .btnGold:hover {
  transform: scale(1.05);
  box-shadow: 0 0 25px rgba(255,215,0,0.6);
 }
 /* ========================= */
-/* 🔥 NAVBAR ANIMAÇÃO */
+/* BOTÃO OUTLINE (NOVO) */
+/* ========================= */
+.btnOutline {
+ background: transparent;
+ color: #FFD700;
+ border: 1px solid #FFD700;
+ padding: 18px 40px;
+ border-radius: 10px;
+ cursor: pointer;
+ transition: 0.3s;
+}
+.btnOutline:hover {
+ background: #FFD700;
+ color: black;
+}
+/* ========================= */
+/* NAVBAR ANIMAÇÃO */
 /* ========================= */
 nav a:hover span + span {
  width: 100%;
 }
 /* ========================= */
-/* 🔥 INPUTS E SELECT PREMIUM */
+/* INPUTS E SELECT */
 /* ========================= */
 input,
 select {
@@ -127,7 +146,7 @@ select:focus {
  border-color: #FFD700;
 }
 /* ========================= */
-/* 🔥 BOTÕES PADRÃO */
+/* BOTÕES PADRÃO */
 /* ========================= */
 button {
  transition: all 0.2s ease;
@@ -136,7 +155,7 @@ button:hover {
  transform: scale(1.03);
 }
 /* ========================= */
-/* 🔥 ANIMAÇÃO DE ENTRADA */
+/* ANIMAÇÃO DE ENTRADA */
 /* ========================= */
 .fadeIn {
  animation: fadeIn 0.6s ease forwards;
@@ -150,4 +169,49 @@ button:hover {
    opacity: 1;
    transform: translateY(0);
  }
+}
+/* ========================= */
+/* BOX DESTAQUE (SOBRE) */
+/* ========================= */
+.boxDestaque {
+ border: 1px solid rgba(255,215,0,0.3);
+ padding: 30px;
+ border-radius: 12px;
+ text-align: center;
+ background: rgba(255,215,0,0.05);
+ transition: 0.3s;
+}
+.boxDestaque:hover {
+ transform: translateY(-5px);
+ box-shadow: 0 0 25px rgba(255,215,0,0.2);
+}
+/* ========================= */
+/* CARDS DE VALORES */
+/* ========================= */
+.boxCard {
+ border: 1px solid rgba(255,255,255,0.1);
+ padding: 25px;
+ border-radius: 10px;
+ transition: 0.3s;
+ background: rgba(255,255,255,0.02);
+}
+.boxCard:hover {
+ border-color: #FFD700;
+ transform: translateY(-5px);
+}
+/* ========================= */
+/* TEXTOS */
+/* ========================= */
+h1, h2, h3 {
+ letter-spacing: 1px;
+}
+p {
+ line-height: 1.6;
+}
+/* ========================= */
+/* LINKS */
+/* ========================= */
+a {
+ text-decoration: none;
+ color: inherit;
 }
