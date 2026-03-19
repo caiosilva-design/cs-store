@@ -129,34 +129,51 @@ export default function Home() {
 </section>
      {/* DESTAQUES */}
 <section style={{
-       padding: "100px 20px",
-       textAlign: "center"
-     }}>
+ padding: "100px 20px",
+ textAlign: "center"
+}}>
 <h2 style={{ fontSize: "40px" }}>
-         Destaques da semana
+   Destaques da semana
 </h2>
 <div style={{
-         marginTop: "50px",
+   marginTop: "50px",
+   display: "flex",
+   justifyContent: "center",
+   gap: "30px",
+   flexWrap: "wrap"
+ }}>
+   {[
+     { nome: "Brasil", id: 178 },
+     { nome: "Corinthians", id: 24 },
+     { nome: "Caixa", id: 75 }
+   ].map((item, i) => (
+<Link key={i} href={`/produto/${item.id}`}>
+<div style={{
+         width: "220px",
+         height: "280px",
+         borderRadius: "12px",
+         background: "rgba(255,255,255,0.03)",
+         border: "1px solid rgba(255,255,255,0.1)",
          display: "flex",
+         alignItems: "center",
          justifyContent: "center",
-         gap: "30px",
-         flexWrap: "wrap"
-       }}>
-         {["Brasil", "Corinthians", "Caixa"].map((item, i) => (
-<div key={i} style={{
-             width: "220px",
-             height: "280px",
-             borderRadius: "12px",
-             background: "rgba(255,255,255,0.03)",
-             border: "1px solid rgba(255,255,255,0.1)",
-             display: "flex",
-             alignItems: "center",
-             justifyContent: "center",
-             fontWeight: "bold"
-           }}>
-             {item}
+         fontWeight: "bold",
+         cursor: "pointer",
+         transition: "0.3s"
+       }}
+       onMouseEnter={(e) => {
+         e.currentTarget.style.border = "1px solid #FFD700";
+         e.currentTarget.style.transform = "scale(1.05)";
+       }}
+       onMouseLeave={(e) => {
+         e.currentTarget.style.border = "1px solid rgba(255,255,255,0.1)";
+         e.currentTarget.style.transform = "scale(1)";
+       }}
+>
+         {item.nome}
 </div>
-         ))}
+</Link>
+   ))}
 </div>
 </section>
      {/* SOBRE */}
