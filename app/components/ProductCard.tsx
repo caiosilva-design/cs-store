@@ -2,17 +2,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 export default function ProductCard({ produto, isDetalhe = false }: any) {
+ const router = useRouter();
  const [tamanho, setTamanho] = useState("");
  const [qualidade, setQualidade] = useState(5);
  const [preco, setPreco] = useState(5);
- const router = useRouter();
- // 🔥 NAVEGAÇÃO
+ // 👉 ir para página do produto
  const irParaProduto = () => {
    router.push(`/produto/${produto.id}`);
  };
  // 🛒 COMPRAR
- const comprar = (e: any) => {
-   e.stopPropagation();
+ const comprar = () => {
    if (!tamanho) {
      alert("⚠️ Selecione um tamanho");
      return;
@@ -22,13 +21,15 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
      `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`
    );
  };
- // 🔔 AVISO
- const enviarAviso = async (e: any) => {
-   e.stopPropagation();
-   const tamanhoDesejado = prompt("Qual tamanho você gostaria?");
-   if (!tamanhoDesejado) return;
+ // 🔔 AVISO (SEM TRAVAR TAMANHO)
+ const enviarAviso = async () => {
+   const tamanhoDesejado = prompt("Qual tamanho você deseja?");
    const email = prompt("Digite seu email:");
-   const whatsapp = prompt("Digite seu WhatsApp");
+   const whatsapp = prompt("Digite seu WhatsApp:");
+   if (!tamanhoDesejado || !email || !whatsapp) {
+     alert("Preencha todos os dados");
+     return;
+   }
    await fetch("https://cs-store-api-production.up.railway.app/aviso", {
      method: "POST",
      headers: {
@@ -44,8 +45,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
    alert("🔔 Aviso cadastrado!");
  };
  // ⭐ FEEDBACK
- const enviarFeedback = async (e: any) => {
-   e.stopPropagation();
+ const enviarFeedback = async () => {
    await fetch("https://cs-store-api-production.up.railway.app/feedback", {
      method: "POST",
      headers: {
@@ -60,39 +60,45 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
    alert("⭐ Feedback enviado!");
  };
  // 💥 REGRA CAIXA
- let variacoes = produto.variacoes || [];
- if (produto.nome.toLowerCase().includes("caixa")) {
+ let variacoes = produto?.variacoes || [];
+ if (produto.nome?.toLowerCase().includes("caixa")) {
    variacoes = [{ tamanho: "Único", disponivel: true }];
  }
  return (
-<div
-     style={{
-       maxWidth: "400px",
-       margin: "auto",
-       cursor: "pointer",
-     }}
->
-     {/* 👇 SÓ ISSO NAVEGA */}
-<div onClick={irParaProduto}>
+<div style={{ maxWidth: "300px", margin: "auto" }}>
+     {/* 🔥 CLICK SÓ NA IMAGEM */}
+<div onClick={irParaProduto} style={{ cursor: "pointer" }}>
 <img
-         src={produto.imagem}
+         src={produto.imagem || "/bg.jpg"}
          style={{
            width: "100%",
-           height: "300px",
+           height: "250px",
            objectFit: "cover",
            borderRadius: "10px",
          }}
        />
-<h2>{produto.nome}</h2>
 </div>
+     {/* 🔥 CLICK SÓ NO NOME */}
+<h3
+       onClick={irParaProduto}
+       style={{ cursor: "pointer", marginTop: "10px" }}
+>
+       {produto.nome}
+</h3>
      {/* PREÇO */}
 <div>
        {produto.preco_antigo && (
-<span style={{ textDecoration: "line-through", marginRight: "10px" }}>
+<span
+           style={{
+             textDecoration: "line-through",
+             marginRight: "10px",
+             color: "#999",
+           }}
+>
            R$ {produto.preco_antigo}
 </span>
        )}
-<strong>R$ {produto.preco}</strong>
+<strong style={{ color: "#FFD700" }}>R$ {produto.preco}</strong>
 </div>
      {/* TAMANHO */}
 <select
@@ -107,14 +113,34 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 </option>
        ))}
 </select>
-     {/* BOTÕES */}
-<button onClick={comprar} style={{ width: "100%", marginTop: "10px" }}>
+     {/* BOTÃO COMPRAR (DOURADO 🔥) */}
+<button
+       onClick={comprar}
+       style={{
+         width: "100%",
+         marginTop: "10px",
+         background: "#FFD700",
+         color: "black",
+         padding: "10px",
+         border: "none",
+         fontWeight: "bold",
+         cursor: "pointer",
+       }}
+>
        Comprar
 </button>
-<button onClick={enviarAviso} style={{ width: "100%", marginTop: "5px" }}>
+     {/* AVISO */}
+<button
+       onClick={enviarAviso}
+       style={{
+         width: "100%",
+         marginTop: "5px",
+         padding: "8px",
+       }}
+>
        Avise-me
 </button>
-     {/* ⭐ DETALHE */}
+     {/* ⭐ SÓ NA PÁGINA DETALHE */}
      {isDetalhe && (
 <>
 <h3 style={{ marginTop: "20px" }}>Avaliar produto</h3>
@@ -128,7 +154,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 <option key={n}>{n}</option>
            ))}
 </select>
-<button onClick={enviarFeedback}>
+<button onClick={enviarFeedback} style={{ marginTop: "10px" }}>
            Enviar avaliação
 </button>
 </>
