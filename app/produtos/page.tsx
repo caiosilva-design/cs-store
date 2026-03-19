@@ -36,7 +36,9 @@ export default function Produtos() {
 <h1
        style={{
          marginBottom: "20px",
-         fontSize: "32px",
+         fontSize: "34px",
+         fontWeight: "bold",
+         letterSpacing: "1px",
        }}
 >
        Catálogo
@@ -47,16 +49,26 @@ export default function Produtos() {
        value={busca}
        onChange={(e) => setBusca(e.target.value)}
        style={{
-         marginBottom: "20px",
-         padding: "12px",
+         marginBottom: "25px",
+         padding: "14px",
          width: "100%",
-         borderRadius: "6px",
-         border: "none",
+         borderRadius: "8px",
+         border: "1px solid #222",
          outline: "none",
+         background: "#111",
+         color: "white",
+         fontSize: "14px",
+         transition: "0.2s",
        }}
+       onFocus={(e) =>
+         (e.currentTarget.style.border = "1px solid #FFD700")
+       }
+       onBlur={(e) =>
+         (e.currentTarget.style.border = "1px solid #222")
+       }
      />
      {/* 🎯 FILTRO TAMANHO */}
-<div style={{ marginBottom: "20px" }}>
+<div style={{ marginBottom: "25px" }}>
        {["", "P", "M", "G", "GG"].map((t) => (
 <button
            key={t}
@@ -64,14 +76,24 @@ export default function Produtos() {
            style={{
              marginRight: "8px",
              marginBottom: "8px",
-             padding: "8px 14px",
-             background: tamanhoFiltro === t ? "#FFD700" : "#222",
+             padding: "8px 16px",
+             background: tamanhoFiltro === t ? "#FFD700" : "#111",
              color: tamanhoFiltro === t ? "black" : "white",
-             border: "none",
-             borderRadius: "6px",
+             border: "1px solid #333",
+             borderRadius: "20px",
              cursor: "pointer",
              fontWeight: "bold",
-             transition: "0.2s",
+             transition: "0.25s",
+           }}
+           onMouseEnter={(e) => {
+             if (tamanhoFiltro !== t) {
+               e.currentTarget.style.background = "#222";
+             }
+           }}
+           onMouseLeave={(e) => {
+             if (tamanhoFiltro !== t) {
+               e.currentTarget.style.background = "#111";
+             }
            }}
 >
            {t || "Todos"}
@@ -83,8 +105,8 @@ export default function Produtos() {
        style={{
          display: "grid",
          gridTemplateColumns:
-           "repeat(auto-fill, minmax(220px, 1fr))",
-         gap: "20px",
+           "repeat(auto-fill, minmax(240px, 1fr))",
+         gap: "25px",
        }}
 >
        {filtrados.map((p: any) => (
@@ -104,9 +126,15 @@ export default function Produtos() {
 </div>
        ))}
 </div>
-     {/* 🧾 CASO NÃO TENHA PRODUTO */}
+     {/* 🧾 SEM PRODUTO */}
      {filtrados.length === 0 && (
-<p style={{ marginTop: "40px", opacity: 0.6 }}>
+<p
+         style={{
+           marginTop: "50px",
+           opacity: 0.6,
+           textAlign: "center",
+         }}
+>
          Nenhum produto encontrado.
 </p>
      )}
