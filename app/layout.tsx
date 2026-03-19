@@ -1,8 +1,9 @@
 import "./globals.css";
 import Footer from "./components/Footer";
+import Navbar from "./components/Navbar"; // 👈 ADICIONADO
 export const metadata = {
  title: "CRIA STUDIO",
- description: "Camisas premium e personalizadas"
+ description: "Camisas premium e personalizadas",
 };
 export default function RootLayout({ children }: any) {
  return (
@@ -11,14 +12,16 @@ export default function RootLayout({ children }: any) {
        style={{
          display: "flex",
          flexDirection: "column",
-         minHeight: "100vh"
+         minHeight: "100vh",
        }}
 >
-       {/* CONTEÚDO */}
-<main style={{ flex: 1 }}>
+       {/* 🔥 NAVBAR GLOBAL */}
+<Navbar />
+       {/* 🔥 CONTEÚDO */}
+<main style={{ flex: 1, marginTop: "80px" }}>
          {children}
 </main>
-       {/* RODAPÉ GLOBAL */}
+       {/* 🔥 RODAPÉ (MANTIDO) */}
 <Footer />
 </body>
 </html>
