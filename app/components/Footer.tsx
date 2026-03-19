@@ -19,7 +19,7 @@ export default function Footer() {
 >
        {/* MARCA */}
 <div>
-<h2 style={{ color: "#d4af37" }}>🔥 CRIA STUDIO</h2>
+<h2 style={{ color: "#d4af37" }}>CRIA STUDIO</h2>
 <p style={{ color: "#aaa", maxWidth: "300px" }}>
            Camisas personalizadas com qualidade premium. Vista o que te
            representa com estilo único e 100% autêntico.
