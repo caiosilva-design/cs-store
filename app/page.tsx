@@ -259,6 +259,3 @@ function Card({ nome }: any) {
   );
 
 }
-Compartilhe no WhatsApp
-WhatsApp Messenger: mais de dois bilhões de pessoas, em mais de 180 países, usam o WhatsApp para manter o contato com amigos e familiares, a qualquer hora ou lugar. O WhatsApp é gratuito e oferece ...
- 
