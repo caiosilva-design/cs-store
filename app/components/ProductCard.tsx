@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
-export default function ProductCard({ produto }: any) {
+export default function ProductCard({ produto, isDetalhe = false }: any) {
  const [tamanho, setTamanho] = useState("");
+ const [qualidade, setQualidade] = useState(5);
+ const [preco, setPreco] = useState(5);
  // 🛒 COMPRAR
- const comprar = (e: any) => {
-   e.stopPropagation();
+ const comprar = () => {
    if (!tamanho) {
-     alert("⚠️ Selecione um tamanho primeiro");
+     alert("⚠️ Selecione um tamanho");
      return;
    }
    const texto = `Quero comprar: ${produto.nome} | Tamanho: ${tamanho}`;
@@ -16,18 +16,13 @@ export default function ProductCard({ produto }: any) {
    );
  };
  // 🔔 AVISO
- const enviarAviso = async (e: any) => {
-   e.stopPropagation();
+ const enviarAviso = async () => {
    if (!tamanho) {
-     alert("⚠️ Escolha um tamanho primeiro");
+     alert("⚠️ Escolha um tamanho");
      return;
    }
    const email = prompt("Digite seu email:");
    const whatsapp = prompt("Digite seu WhatsApp:");
-   if (!email || !whatsapp) {
-     alert("Preencha todos os dados");
-     return;
-   }
    await fetch("https://cs-store-api-production.up.railway.app/aviso", {
      method: "POST",
      headers: {
@@ -40,17 +35,10 @@ export default function ProductCard({ produto }: any) {
        whatsapp,
      }),
    });
-   alert("🔔 Aviso cadastrado com sucesso!");
+   alert("🔔 Aviso cadastrado!");
  };
- // ⭐ FEEDBACK
- const enviarFeedback = async (e: any) => {
-   e.stopPropagation();
-   const qualidade = prompt("Qualidade do tecido (1 a 5):");
-   const preco = prompt("Preço justo (1 a 5):");
-   if (!qualidade || !preco) {
-     alert("Preencha os dados");
-     return;
-   }
+ // ⭐ FEEDBACK (SÓ NO DETALHE)
+ const enviarFeedback = async () => {
    await fetch("https://cs-store-api-production.up.railway.app/feedback", {
      method: "POST",
      headers: {
@@ -58,102 +46,78 @@ export default function ProductCard({ produto }: any) {
      },
      body: JSON.stringify({
        produto_id: produto.id,
-       qualidade_tecido: Number(qualidade),
-       preco_justo: Number(preco),
+       qualidade_tecido: qualidade,
+       preco_justo: preco,
      }),
    });
-   alert("⭐ Obrigado pelo feedback!");
+   alert("⭐ Feedback enviado!");
  };
+ // 💥 REGRA CAIXA (SEMPRE DISPONÍVEL)
+ let variacoes = produto.variacoes || [];
+ if (produto.nome.toLowerCase().includes("caixa")) {
+   variacoes = [{ tamanho: "Único", disponivel: true }];
+ }
  return (
-<Link href={`/produto/${produto.id}`} style={{ textDecoration: "none" }}>
-<div
-       style={{
-         border: "1px solid rgba(255,255,255,0.1)",
-         padding: "12px",
-         borderRadius: "12px",
-         background: "rgba(255,255,255,0.03)",
-         transition: "0.3s",
-         cursor: "pointer",
-       }}
->
-       {/* IMAGEM */}
+<div style={{ maxWidth: "400px", margin: "auto" }}>
+     {/* IMAGEM */}
 <img
-         src={produto.imagem}
-         style={{
-           width: "100%",
-           height: "200px",
-           objectFit: "cover",
-           borderRadius: "8px",
-         }}
-       />
-       {/* NOME */}
-<h3 style={{ color: "white" }}>{produto.nome}</h3>
-       {/* PREÇO */}
+       src={produto.imagem}
+       style={{
+         width: "100%",
+         height: "300px",
+         objectFit: "cover",
+         borderRadius: "10px",
+       }}
+     />
+<h2>{produto.nome}</h2>
+     {/* PREÇO */}
 <div>
-         {produto.preco_antigo && (
-<span
-             style={{
-               textDecoration: "line-through",
-               marginRight: "8px",
-               color: "#999",
-             }}
->
-             R$ {produto.preco_antigo}
+       {produto.preco_antigo && (
+<span style={{ textDecoration: "line-through", marginRight: "10px" }}>
+           R$ {produto.preco_antigo}
 </span>
-         )}
-<strong style={{ color: "#FFD700" }}>
-           R$ {produto.preco}
-</strong>
+       )}
+<strong>R$ {produto.preco}</strong>
 </div>
-       {/* TAMANHOS */}
-<div style={{ marginTop: "10px" }}>
-         {produto.variacoes?.map((v: any, i: number) => (
-<button
-             key={i}
-             disabled={!v.disponivel}
-             onClick={(e) => {
-               e.preventDefault();
-               setTamanho(v.tamanho);
-             }}
-             style={{
-               marginRight: "5px",
-               marginTop: "5px",
-               padding: "5px",
-               background: tamanho === v.tamanho ? "black" : "#eee",
-               color: tamanho === v.tamanho ? "white" : "black",
-               border:
-                 tamanho === v.tamanho
-                   ? "2px solid black"
-                   : "1px solid #ccc",
-               cursor: v.disponivel ? "pointer" : "not-allowed",
-               opacity: v.disponivel ? 1 : 0.4,
-             }}
+     {/* TAMANHO */}
+<select
+       value={tamanho}
+       onChange={(e) => setTamanho(e.target.value)}
+       style={{ marginTop: "10px", width: "100%", padding: "8px" }}
 >
-             {v.tamanho}
-</button>
-         ))}
-</div>
-       {/* BOTÕES */}
-<button
-         onClick={comprar}
-         style={{
-           width: "100%",
-           marginTop: "10px",
-           background: tamanho ? "black" : "#aaa",
-           color: "white",
-           padding: "8px",
-           border: "none",
-         }}
->
-         🔥 Comprar agora
+<option value="">Selecione o tamanho</option>
+       {variacoes.map((v: any, i: number) => (
+<option key={i} value={v.tamanho} disabled={!v.disponivel}>
+           {v.tamanho}
+</option>
+       ))}
+</select>
+     {/* BOTÕES */}
+<button onClick={comprar} style={{ width: "100%", marginTop: "10px" }}>
+       Comprar
 </button>
 <button onClick={enviarAviso} style={{ width: "100%", marginTop: "5px" }}>
-         🔔 Avise-me
+       Avise-me
 </button>
-<button onClick={enviarFeedback} style={{ width: "100%", marginTop: "5px" }}>
-         ⭐ Avaliar produto
+     {/* ⭐ SÓ NO DETALHE */}
+     {isDetalhe && (
+<>
+<h3 style={{ marginTop: "20px" }}>Avaliar produto</h3>
+<select onChange={(e) => setQualidade(Number(e.target.value))}>
+           {[1, 2, 3, 4, 5].map((n) => (
+<option key={n}>{n}</option>
+           ))}
+</select>
+<select onChange={(e) => setPreco(Number(e.target.value))}>
+           {[1, 2, 3, 4, 5].map((n) => (
+<option key={n}>{n}</option>
+           ))}
+</select>
+<button onClick={enviarFeedback}>
+           Enviar avaliação
 </button>
+</>
+     )}
 </div>
-</Link>
  );
 }
