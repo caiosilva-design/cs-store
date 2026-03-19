@@ -1,9 +1,15 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 export default function ProductCard({ produto, isDetalhe = false }: any) {
  const [tamanho, setTamanho] = useState("");
  const [qualidade, setQualidade] = useState(5);
  const [preco, setPreco] = useState(5);
+ const router = useRouter();
+ // 🔥 NAVEGAÇÃO
+ const irParaProduto = () => {
+   router.push(`/produto/${produto.id}`);
+ };
  // 🛒 COMPRAR
  const comprar = (e: any) => {
    e.stopPropagation();
@@ -16,17 +22,13 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
      `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`
    );
  };
- // 🔔 AVISO (NOVO FLUXO)
+ // 🔔 AVISO
  const enviarAviso = async (e: any) => {
    e.stopPropagation();
    const tamanhoDesejado = prompt("Qual tamanho você gostaria?");
    if (!tamanhoDesejado) return;
    const email = prompt("Digite seu email:");
-   const whatsapp = prompt("Digite seu WhatsApp:");
-   if (!email || !whatsapp) {
-     alert("Preencha todos os dados");
-     return;
-   }
+   const whatsapp = prompt("Digite seu WhatsApp");
    await fetch("https://cs-store-api-production.up.railway.app/aviso", {
      method: "POST",
      headers: {
@@ -39,7 +41,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
        whatsapp,
      }),
    });
-   alert("🔔 Aviso cadastrado com sucesso!");
+   alert("🔔 Aviso cadastrado!");
  };
  // ⭐ FEEDBACK
  const enviarFeedback = async (e: any) => {
@@ -63,18 +65,26 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
    variacoes = [{ tamanho: "Único", disponivel: true }];
  }
  return (
-<div style={{ maxWidth: "400px", margin: "auto" }}>
-     {/* IMAGEM */}
+<div
+     style={{
+       maxWidth: "400px",
+       margin: "auto",
+       cursor: "pointer",
+     }}
+>
+     {/* 👇 SÓ ISSO NAVEGA */}
+<div onClick={irParaProduto}>
 <img
-       src={produto.imagem}
-       style={{
-         width: "100%",
-         height: "300px",
-         objectFit: "cover",
-         borderRadius: "10px",
-       }}
-     />
+         src={produto.imagem}
+         style={{
+           width: "100%",
+           height: "300px",
+           objectFit: "cover",
+           borderRadius: "10px",
+         }}
+       />
 <h2>{produto.nome}</h2>
+</div>
      {/* PREÇO */}
 <div>
        {produto.preco_antigo && (
@@ -104,7 +114,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 <button onClick={enviarAviso} style={{ width: "100%", marginTop: "5px" }}>
        Avise-me
 </button>
-     {/* ⭐ SÓ NO DETALHE */}
+     {/* ⭐ DETALHE */}
      {isDetalhe && (
 <>
 <h3 style={{ marginTop: "20px" }}>Avaliar produto</h3>
