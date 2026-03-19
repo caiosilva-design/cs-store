@@ -6,23 +6,26 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
  const [tamanho, setTamanho] = useState("");
  const [qualidade, setQualidade] = useState(5);
  const [preco, setPreco] = useState(5);
- // 👉 ir para página do produto
+ // 👉 navegação (SÓ imagem + nome)
  const irParaProduto = () => {
    router.push(`/produto/${produto.id}`);
  };
  // 🛒 COMPRAR
- const comprar = () => {
+ const comprar = (e: any) => {
+   e.stopPropagation();
    if (!tamanho) {
      alert("⚠️ Selecione um tamanho");
      return;
    }
    const texto = `Quero comprar: ${produto.nome} | Tamanho: ${tamanho}`;
    window.open(
-     `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`
+     `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`,
+     "_blank"
    );
  };
  // 🔔 AVISO (SEM TRAVAR TAMANHO)
- const enviarAviso = async () => {
+ const enviarAviso = async (e: any) => {
+   e.stopPropagation();
    const tamanhoDesejado = prompt("Qual tamanho você deseja?");
    const email = prompt("Digite seu email:");
    const whatsapp = prompt("Digite seu WhatsApp:");
@@ -44,7 +47,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
    });
    alert("🔔 Aviso cadastrado!");
  };
- // ⭐ FEEDBACK
+ // ⭐ FEEDBACK (SÓ DETALHE)
  const enviarFeedback = async () => {
    await fetch("https://cs-store-api-production.up.railway.app/feedback", {
      method: "POST",
@@ -61,15 +64,16 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
  };
  // 💥 REGRA CAIXA
  let variacoes = produto?.variacoes || [];
- if (produto.nome?.toLowerCase().includes("caixa")) {
+ if (produto?.nome?.toLowerCase().includes("caixa")) {
    variacoes = [{ tamanho: "Único", disponivel: true }];
  }
  return (
 <div style={{ maxWidth: "300px", margin: "auto" }}>
-     {/* 🔥 CLICK SÓ NA IMAGEM */}
+     {/* 🔥 IMAGEM (CLICÁVEL) */}
 <div onClick={irParaProduto} style={{ cursor: "pointer" }}>
 <img
-         src={produto.imagem || "/bg.jpg"}
+         src={produto?.imagem || "/bg.jpg"}
+         alt={produto?.nome}
          style={{
            width: "100%",
            height: "250px",
@@ -78,16 +82,20 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
          }}
        />
 </div>
-     {/* 🔥 CLICK SÓ NO NOME */}
+     {/* 🔥 NOME (CLICÁVEL) */}
 <h3
        onClick={irParaProduto}
-       style={{ cursor: "pointer", marginTop: "10px" }}
+       style={{
+         cursor: "pointer",
+         marginTop: "10px",
+         fontWeight: "bold",
+       }}
 >
-       {produto.nome}
+       {produto?.nome}
 </h3>
-     {/* PREÇO */}
+     {/* 💰 PREÇO */}
 <div>
-       {produto.preco_antigo && (
+       {produto?.preco_antigo && (
 <span
            style={{
              textDecoration: "line-through",
@@ -98,13 +106,20 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
            R$ {produto.preco_antigo}
 </span>
        )}
-<strong style={{ color: "#FFD700" }}>R$ {produto.preco}</strong>
+<strong style={{ color: "#FFD700" }}>
+         R$ {produto?.preco}
+</strong>
 </div>
-     {/* TAMANHO */}
+     {/* 📏 TAMANHO */}
 <select
        value={tamanho}
        onChange={(e) => setTamanho(e.target.value)}
-       style={{ marginTop: "10px", width: "100%", padding: "8px" }}
+       onClick={(e) => e.stopPropagation()}
+       style={{
+         marginTop: "10px",
+         width: "100%",
+         padding: "8px",
+       }}
 >
 <option value="">Selecione o tamanho</option>
        {variacoes.map((v: any, i: number) => (
@@ -113,7 +128,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 </option>
        ))}
 </select>
-     {/* BOTÃO COMPRAR (DOURADO 🔥) */}
+     {/* 🛒 COMPRAR */}
 <button
        onClick={comprar}
        style={{
@@ -129,7 +144,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 >
        Comprar
 </button>
-     {/* AVISO */}
+     {/* 🔔 AVISO */}
 <button
        onClick={enviarAviso}
        style={{
@@ -140,7 +155,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 >
        Avise-me
 </button>
-     {/* ⭐ SÓ NA PÁGINA DETALHE */}
+     {/* ⭐ AVALIAÇÃO (SÓ NA PÁGINA INDIVIDUAL) */}
      {isDetalhe && (
 <>
 <h3 style={{ marginTop: "20px" }}>Avaliar produto</h3>
@@ -149,12 +164,18 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 <option key={n}>{n}</option>
            ))}
 </select>
-<select onChange={(e) => setPreco(Number(e.target.value))}>
+<select
+           onChange={(e) => setPreco(Number(e.target.value))}
+           style={{ marginLeft: "10px" }}
+>
            {[1, 2, 3, 4, 5].map((n) => (
 <option key={n}>{n}</option>
            ))}
 </select>
-<button onClick={enviarFeedback} style={{ marginTop: "10px" }}>
+<button
+           onClick={enviarFeedback}
+           style={{ display: "block", marginTop: "10px" }}
+>
            Enviar avaliação
 </button>
 </>
