@@ -1,5 +1,13 @@
 import Link from "next/link";
-export default function Home() {
+export default async function Home() {
+ // 🔥 BUSCA PRODUTOS DA API
+ const res = await fetch("https://cs-store-api-production.up.railway.app/produtos", {
+   cache: "no-store"
+ });
+ const produtos = await res.json();
+ const destaques = produtos.filter((p: any) =>
+   [178, 24, 75].includes(p.id)
+ );
  return (
 <main style={{ color: "white", background: "#000" }}>
      {/* HERO */}
@@ -18,28 +26,16 @@ export default function Home() {
        padding: "20px"
      }}>
 <div>
-<p style={{
-           color: "#FFD700",
-           letterSpacing: "3px",
-           fontSize: "14px"
-         }}>
+<p style={{ color: "#FFD700", letterSpacing: "3px", fontSize: "14px" }}>
            NOVA COLEÇÃO 2026
 </p>
-<h1 style={{
-           fontSize: "70px",
-           fontWeight: "bold",
-           lineHeight: "1.1"
-         }}>
+<h1 style={{ fontSize: "70px", fontWeight: "bold", lineHeight: "1.1" }}>
            VISTA O <br />
 <span style={{ color: "#FFD700" }}>
              QUE TE REPRESENTA
 </span>
 </h1>
-<p style={{
-           marginTop: "20px",
-           opacity: 0.7,
-           fontSize: "18px"
-         }}>
+<p style={{ marginTop: "20px", opacity: 0.7, fontSize: "18px" }}>
            Camisas premium. Estilo único. Identidade própria.
 </p>
 <div style={{ marginTop: "30px" }}>
@@ -74,15 +70,8 @@ export default function Home() {
 </div>
 </section>
      {/* AVALIAÇÃO */}
-<section style={{
-       padding: "100px 20px",
-       textAlign: "center"
-     }}>
-<h2 style={{
-         fontSize: "30px",
-         color: "#FFD700",
-         letterSpacing: "6px"
-       }}>
+<section style={{ padding: "100px 20px", textAlign: "center" }}>
+<h2 style={{ fontSize: "30px", color: "#FFD700", letterSpacing: "6px" }}>
          ★★★★★
 </h2>
 <p style={{ opacity: 0.7 }}>
@@ -90,14 +79,8 @@ export default function Home() {
 </p>
 </section>
      {/* DIFERENCIAIS */}
-<section style={{
-       padding: "100px 20px",
-       textAlign: "center"
-     }}>
-<h2 style={{
-         fontSize: "40px",
-         marginBottom: "50px"
-       }}>
+<section style={{ padding: "100px 20px", textAlign: "center" }}>
+<h2 style={{ fontSize: "40px", marginBottom: "50px" }}>
          Por que escolher a CS Store?
 </h2>
 <div style={{
@@ -116,8 +99,7 @@ export default function Home() {
              padding: "30px",
              borderRadius: "12px",
              background: "rgba(255,255,255,0.03)",
-             border: "1px solid rgba(255,255,255,0.1)",
-             transition: "0.3s"
+             border: "1px solid rgba(255,255,255,0.1)"
            }}>
 <h3>{item}</h3>
 <p style={{ opacity: 0.6, fontSize: "14px" }}>
@@ -127,53 +109,30 @@ export default function Home() {
          ))}
 </div>
 </section>
-     {/* DESTAQUES */}
-<section style={{
- padding: "100px 20px",
- textAlign: "center"
-}}>
+     {/* DESTAQUES DINÂMICOS */}
+<section style={{ padding: "100px 20px", textAlign: "center" }}>
 <h2 style={{ fontSize: "40px" }}>
-   Destaques da semana
+         Destaques da semana
 </h2>
 <div style={{
-   marginTop: "50px",
-   display: "flex",
-   justifyContent: "center",
-   gap: "30px",
-   flexWrap: "wrap"
- }}>
-   {[
-     { nome: "Brasil", id: 178 },
-     { nome: "Corinthians", id: 24 },
-     { nome: "Caixa", id: 75 }
-   ].map((item, i) => (
-<Link key={i} href={`/produto/${item.id}`}>
-<div style={{
-         width: "220px",
-         height: "280px",
-         borderRadius: "12px",
-         background: "rgba(255,255,255,0.03)",
-         border: "1px solid rgba(255,255,255,0.1)",
+         marginTop: "50px",
          display: "flex",
-         alignItems: "center",
          justifyContent: "center",
-         fontWeight: "bold",
-         cursor: "pointer",
-         transition: "0.3s"
-       }}
-       onMouseEnter={(e) => {
-         e.currentTarget.style.border = "1px solid #FFD700";
-         e.currentTarget.style.transform = "scale(1.05)";
-       }}
-       onMouseLeave={(e) => {
-         e.currentTarget.style.border = "1px solid rgba(255,255,255,0.1)";
-         e.currentTarget.style.transform = "scale(1)";
-       }}
+         gap: "30px",
+         flexWrap: "wrap"
+       }}>
+         {destaques.map((item: any) => (
+<Link
+             key={item.id}
+             href={`/produto/${item.id}`}
+             className="cardProduto"
 >
-         {item.nome}
-</div>
+<img src={item.imagem} alt={item.nome} />
+<div className="overlay" />
+<span>{item.nome}</span>
+<div className="preco">R$ {item.preco}</div>
 </Link>
-   ))}
+         ))}
 </div>
 </section>
      {/* SOBRE */}
@@ -183,53 +142,29 @@ export default function Home() {
        maxWidth: "800px",
        margin: "auto"
      }}>
-<h2 style={{
-         fontSize: "50px",
-         lineHeight: "1.2"
-       }}>
+<h2 style={{ fontSize: "50px" }}>
          Mais que uma marca,<br />
-<span style={{ color: "#FFD700" }}>
-           um estúdio
-</span>
+<span style={{ color: "#FFD700" }}>um estúdio</span>
 </h2>
 <p style={{
          marginTop: "20px",
          fontSize: "18px",
-         opacity: 0.7,
-         lineHeight: "1.6"
+         opacity: 0.7
        }}>
          Criamos camisetas com identidade, estilo e personalidade
          para quem vive o futebol dentro e fora de campo.
 </p>
 </section>
-     {/* CTA FINAL */}
-<section style={{
-       padding: "120px 20px",
-       textAlign: "center"
-     }}>
-<h2 style={{
-         fontSize: "60px"
-       }}>
+     {/* CTA */}
+<section style={{ padding: "120px 20px", textAlign: "center" }}>
+<h2 style={{ fontSize: "60px" }}>
          PRONTO PARA ENTRAR EM CAMPO?
 </h2>
-<p style={{
-         margin: "20px 0",
-         opacity: 0.7
-       }}>
+<p style={{ margin: "20px 0", opacity: 0.7 }}>
          Personalize agora e receba em casa.
 </p>
 <a href="https://wa.me/5511972734037">
-<button style={{
-           background: "#FFD700",
-           color: "black",
-           padding: "18px 50px",
-           border: "none",
-           borderRadius: "10px",
-           fontWeight: "bold",
-           fontSize: "16px",
-           cursor: "pointer",
-           boxShadow: "0 0 20px rgba(255,215,0,0.3)"
-         }}>
+<button className="btnGold">
            FALAR NO WHATSAPP →
 </button>
 </a>
