@@ -1,15 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 export default async function ProdutoPage({ params }: any) {
- const supabase = createClient();
- const { data: produto } = await supabase
-   .from("produtos")
-   .select("*")
-   .eq("id", params.id)
-   .single();
- const { data: variacoes } = await supabase
-   .from("variacoes")
-   .select("*")
-   .eq("produto_id", params.id);
+ const res = await fetch(`https://cs-store-api-production.up.railway.app/produtos/${params.id}`, {
+   cache: "no-store"
+ });
+ const produto = await res.json();
  if (!produto) {
    return <div>Produto não encontrado</div>;
  }
@@ -42,20 +36,16 @@ export default async function ProdutoPage({ params }: any) {
 <div style={{ marginTop: "20px" }}>
 <p>Selecione o tamanho:</p>
 <select style={{ padding: "10px", borderRadius: "6px" }}>
-             {(isCaixa
-               ? [{ tamanho: "Único", disponivel: true }]
-               : variacoes
-             )?.map((v: any, i: number) => (
-<option
-                 key={i}
-                 disabled={!v.disponivel}
->
-                 {v.tamanho}
-</option>
-             ))}
+             {isCaixa ? (
+<option>Único</option>
+             ) : (
+               ["P", "M", "G", "GG"].map(t => (
+<option key={t}>{t}</option>
+               ))
+             )}
 </select>
 </div>
-         {/* BOTÃO WHATSAPP */}
+         {/* WHATSAPP */}
 <a
            href={`https://wa.me/5511972734037?text=Quero ${produto.nome}`}
            target="_blank"
