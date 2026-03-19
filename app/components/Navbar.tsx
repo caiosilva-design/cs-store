@@ -21,7 +21,7 @@ export default function Navbar() {
      {/* MENU */}
 <div style={{ display: "flex", gap: "25px", color: "white" }}>
 <Link href="/">Início</Link>
-<Link href="/catalogo">Catálogo</Link>
+<Link href="/produtos">Catálogo</Link>
 <Link href="/sobre">Sobre</Link>
 <Link href="/contato">Contato</Link>
 </div>
