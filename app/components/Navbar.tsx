@@ -1,38 +1,30 @@
 import Link from "next/link";
+import Image from "next/image";
 export default function Navbar() {
  return (
-<header style={styles.nav}>
-<div style={styles.logo}>CRIA STUDIO</div>
-<nav style={styles.links}>
+<nav style={{
+     display: "flex",
+     justifyContent: "space-between",
+     alignItems: "center",
+     padding: "20px 40px",
+     position: "fixed",
+     width: "100%",
+     top: 0,
+     zIndex: 10,
+     background: "rgba(0,0,0,0.6)",
+     backdropFilter: "blur(10px)"
+   }}>
+     {/* LOGO */}
+<Link href="/">
+<Image src="/logo.png" alt="logo" width={50} height={50} />
+</Link>
+     {/* MENU */}
+<div style={{ display: "flex", gap: "30px" }}>
 <Link href="/">Início</Link>
-<Link href="/produtos">Catálogo</Link>
+<Link href="/catalogo">Catálogo</Link>
 <Link href="/sobre">Sobre</Link>
 <Link href="/contato">Contato</Link>
+</div>
 </nav>
-</header>
  );
 }
-const styles = {
- nav: {
-   display: "flex",
-   justifyContent: "space-between",
-   alignItems: "center",
-   padding: "20px 40px",
-   background: "#000",
-   borderBottom: "1px solid #222",
-   position: "sticky" as const,
-   top: 0,
-   zIndex: 100,
- },
- logo: {
-   color: "#d4af37",
-   fontSize: "20px",
-   fontWeight: "bold",
-   letterSpacing: "2px",
- },
- links: {
-   display: "flex",
-   gap: "25px",
-   fontSize: "14px",
- },
-};
