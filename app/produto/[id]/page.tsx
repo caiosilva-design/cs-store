@@ -5,171 +5,88 @@ export default function ProdutoPage() {
  const params = useParams();
  const [produto, setProduto] = useState<any>(null);
  const [tamanho, setTamanho] = useState("");
- const [qualidade, setQualidade] = useState("");
- const [preco, setPreco] = useState("");
- // 🔥 BUSCAR PRODUTO
  useEffect(() => {
-   if (!params?.id) return;
    fetch(`https://cs-store-api-production.up.railway.app/produto/${params.id}`)
      .then((res) => res.json())
-     .then((data) => {
-       console.log("PRODUTO:", data);
-       setProduto(data);
-     });
+     .then(setProduto);
  }, [params]);
- if (!produto)
-   return <div style={{ padding: "40px", color: "white" }}>Carregando...</div>;
- // 💥 GARANTIA DE VARIAÇÕES
+ if (!produto) return <div style={{ color: "white" }}>Carregando...</div>;
  let variacoes = produto.variacoes || [];
- if (produto.nome?.toLowerCase().includes("caixa")) {
+ if (produto.nome.toLowerCase().includes("caixa")) {
    variacoes = [{ tamanho: "Único", disponivel: true }];
  }
- // 🛒 COMPRAR
  const comprar = () => {
-   if (!tamanho) {
-     alert("Selecione o tamanho");
-     return;
-   }
-   const texto = `Quero comprar: ${produto.nome} | Tamanho: ${tamanho}`;
+   if (!tamanho) return alert("Selecione o tamanho");
+   const texto = `Quero comprar: ${produto.nome} | ${tamanho}`;
    window.open(
-     `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`,
-     "_blank"
+     `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`
    );
- };
- // 🔔 AVISO
- const aviso = async () => {
-   const tamanhoDesejado = tamanho || prompt("Qual tamanho você deseja?");
-   const email = prompt("Seu email:");
-   const whatsapp = prompt("Seu WhatsApp:");
-   if (!tamanhoDesejado || !email || !whatsapp) return;
-   await fetch("https://cs-store-api-production.up.railway.app/aviso", {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json",
-     },
-     body: JSON.stringify({
-       produto_id: produto.id,
-       tamanho: tamanhoDesejado,
-       email,
-       whatsapp,
-     }),
-   });
-   alert("Aviso cadastrado!");
- };
- // ⭐ FEEDBACK
- const feedback = async () => {
-   if (!qualidade || !preco) {
-     alert("Preencha a avaliação");
-     return;
-   }
-   await fetch("https://cs-store-api-production.up.railway.app/feedback", {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json",
-     },
-     body: JSON.stringify({
-       produto_id: produto.id,
-       qualidade_tecido: Number(qualidade),
-       preco_justo: Number(preco),
-     }),
-   });
-   alert("Avaliação enviada!");
  };
  return (
 <main
      style={{
-       padding: "120px 20px",
        background: "#000",
        color: "white",
        minHeight: "100vh",
+       padding: "120px 40px",
      }}
 >
-     {/* IMAGEM */}
+<div
+       style={{
+         display: "grid",
+         gridTemplateColumns: "1fr 1fr",
+         gap: "60px",
+       }}
+>
 <img
-       src={produto.imagem || "/bg.jpg"}
-       alt={produto.nome}
-       style={{
-         width: "400px",
-         borderRadius: "10px",
-       }}
-     />
-     {/* NOME */}
-<h1 style={{ marginTop: "20px" }}>{produto.nome}</h1>
-     {/* PREÇO */}
+         src={produto.imagem}
+         style={{
+           width: "100%",
+           borderRadius: "20px",
+           transition: "0.3s",
+         }}
+       />
+<div>
+<h1>{produto.nome}</h1>
 <h2 style={{ color: "#FFD700" }}>
-       R$ {produto.preco}
+           R$ {produto.preco}
 </h2>
-     {/* TAMANHO */}
-<select
-       value={tamanho}
-       onChange={(e) => setTamanho(e.target.value)}
-       style={{
-         marginTop: "20px",
-         padding: "10px",
-         borderRadius: "6px",
-       }}
->
-<option value="">Selecione o tamanho</option>
-       {variacoes.map((v: any, i: number) => (
-<option key={i} value={v.tamanho} disabled={!v.disponivel}>
-           {v.tamanho}
-</option>
-       ))}
-</select>
-     {/* BOTÕES */}
+<div style={{ marginTop: "20px" }}>
+           {variacoes.map((v: any, i: number) => (
 <button
-       onClick={comprar}
-       style={{
-         display: "block",
-         marginTop: "20px",
-         background: "#FFD700",
-         color: "black",
-         padding: "12px",
-         border: "none",
-         fontWeight: "bold",
-         cursor: "pointer",
-       }}
+               key={i}
+               onClick={() => setTamanho(v.tamanho)}
+               disabled={!v.disponivel}
+               style={{
+                 marginRight: "10px",
+                 padding: "10px",
+                 background:
+                   tamanho === v.tamanho ? "#FFD700" : "#222",
+                 color:
+                   tamanho === v.tamanho ? "black" : "white",
+                 border: "none",
+                 cursor: "pointer",
+               }}
 >
-       Comprar
+               {v.tamanho}
 </button>
+           ))}
+</div>
 <button
-       onClick={aviso}
-       style={{
-         display: "block",
-         marginTop: "10px",
-         padding: "10px",
-       }}
+           onClick={comprar}
+           style={{
+             marginTop: "30px",
+             width: "100%",
+             padding: "15px",
+             background: "#FFD700",
+             border: "none",
+             fontWeight: "bold",
+             cursor: "pointer",
+           }}
 >
-       Avisar quando disponível
+           COMPRAR AGORA
 </button>
-     {/* AVALIAÇÃO */}
-<div style={{ marginTop: "30px" }}>
-<h3>Avaliar produto</h3>
-<select onChange={(e) => setQualidade(e.target.value)}>
-<option value="">Qualidade</option>
-         {[1, 2, 3, 4, 5].map((n) => (
-<option key={n} value={n}>
-             {n}
-</option>
-         ))}
-</select>
-<select
-         onChange={(e) => setPreco(e.target.value)}
-         style={{ marginLeft: "10px" }}
->
-<option value="">Preço justo</option>
-         {[1, 2, 3, 4, 5].map((n) => (
-<option key={n} value={n}>
-             {n}
-</option>
-         ))}
-</select>
-<button
-         onClick={feedback}
-         style={{ display: "block", marginTop: "10px" }}
->
-         Enviar avaliação
-</button>
+</div>
 </div>
 </main>
  );
