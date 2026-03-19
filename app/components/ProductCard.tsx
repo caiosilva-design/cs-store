@@ -6,7 +6,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
  const [tamanho, setTamanho] = useState("");
  const [qualidade, setQualidade] = useState(5);
  const [preco, setPreco] = useState(5);
- // 👉 navegação (SÓ imagem + nome)
+ // 👉 navegação (SÓ NA IMAGEM)
  const irParaProduto = () => {
    router.push(`/produto/${produto.id}`);
  };
@@ -23,7 +23,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
      "_blank"
    );
  };
- // 🔔 AVISO (SEM TRAVAR TAMANHO)
+ // 🔔 AVISO
  const enviarAviso = async (e: any) => {
    e.stopPropagation();
    const tamanhoDesejado = prompt("Qual tamanho você deseja?");
@@ -69,8 +69,15 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
  }
  return (
 <div style={{ maxWidth: "300px", margin: "auto" }}>
-     {/* 🔥 IMAGEM (CLICÁVEL) */}
-<div onClick={irParaProduto} style={{ cursor: "pointer" }}>
+     {/* 🔥 IMAGEM CLICÁVEL */}
+<div
+       onClick={irParaProduto}
+       style={{
+         cursor: "pointer",
+         overflow: "hidden",
+         borderRadius: "10px",
+       }}
+>
 <img
          src={produto?.imagem || "/bg.jpg"}
          alt={produto?.nome}
@@ -78,22 +85,21 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
            width: "100%",
            height: "250px",
            objectFit: "cover",
-           borderRadius: "10px",
+           transition: "0.3s",
          }}
+         onMouseOver={(e) =>
+           (e.currentTarget.style.transform = "scale(1.05)")
+         }
+         onMouseOut={(e) =>
+           (e.currentTarget.style.transform = "scale(1)")
+         }
        />
 </div>
-     {/* 🔥 NOME (CLICÁVEL) */}
-<h3
-       onClick={irParaProduto}
-       style={{
-         cursor: "pointer",
-         marginTop: "10px",
-         fontWeight: "bold",
-       }}
->
+     {/* NOME */}
+<h3 style={{ marginTop: "10px", fontWeight: "bold" }}>
        {produto?.nome}
 </h3>
-     {/* 💰 PREÇO */}
+     {/* PREÇO */}
 <div>
        {produto?.preco_antigo && (
 <span
@@ -110,7 +116,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
          R$ {produto?.preco}
 </strong>
 </div>
-     {/* 📏 TAMANHO */}
+     {/* TAMANHO */}
 <select
        value={tamanho}
        onChange={(e) => setTamanho(e.target.value)}
@@ -128,7 +134,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 </option>
        ))}
 </select>
-     {/* 🛒 COMPRAR */}
+     {/* BOTÃO COMPRAR */}
 <button
        onClick={comprar}
        style={{
@@ -144,7 +150,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 >
        Comprar
 </button>
-     {/* 🔔 AVISO */}
+     {/* AVISO */}
 <button
        onClick={enviarAviso}
        style={{
@@ -155,7 +161,7 @@ export default function ProductCard({ produto, isDetalhe = false }: any) {
 >
        Avise-me
 </button>
-     {/* ⭐ AVALIAÇÃO (SÓ NA PÁGINA INDIVIDUAL) */}
+     {/* ⭐ AVALIAÇÃO (SÓ DETALHE) */}
      {isDetalhe && (
 <>
 <h3 style={{ marginTop: "20px" }}>Avaliar produto</h3>
