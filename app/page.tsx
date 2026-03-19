@@ -6,7 +6,7 @@ export default async function Home() {
  });
  const produtos = await res.json();
  const destaques = produtos.filter((p: any) =>
-   [178, 24, 75].includes(p.id)
+   [148, 24, 75].includes(p.id)
  );
  return (
 <main style={{ color: "white", background: "#000" }}>
