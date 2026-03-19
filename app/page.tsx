@@ -39,7 +39,7 @@ export default async function Home() {
            Camisas premium. Estilo único. Identidade própria.
 </p>
 <div style={{ marginTop: "30px" }}>
-<Link href="/catalogo">
+<Link href="/produtos">
 <button style={{
                background: "#FFD700",
                color: "black",
