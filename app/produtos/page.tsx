@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import Link from "next/link";
 export default function Produtos() {
  const [produtos, setProdutos] = useState([]);
  const [busca, setBusca] = useState("");
@@ -24,7 +25,14 @@ export default function Produtos() {
    return matchNome && matchTamanho;
  });
  return (
-<div style={{ padding: "40px" }}>
+<div
+     style={{
+       padding: "120px 20px",
+       background: "#000",
+       color: "white",
+       minHeight: "100vh",
+     }}
+>
 <h1>Catálogo</h1>
      {/* 🔎 BUSCA */}
 <input
@@ -47,9 +55,12 @@ export default function Produtos() {
              marginRight: "5px",
              padding: "8px",
              background:
-               tamanhoFiltro === t ? "black" : "#eee",
+               tamanhoFiltro === t ? "#FFD700" : "#222",
              color:
-               tamanhoFiltro === t ? "white" : "black",
+               tamanhoFiltro === t ? "black" : "white",
+             border: "none",
+             borderRadius: "5px",
+             cursor: "pointer",
            }}
 >
            {t || "Todos"}
@@ -61,12 +72,28 @@ export default function Produtos() {
        style={{
          display: "grid",
          gridTemplateColumns:
-           "repeat(auto-fill, minmax(200px, 1fr))",
+           "repeat(auto-fill, minmax(220px, 1fr))",
          gap: "20px",
        }}
 >
        {filtrados.map((p: any) => (
-<ProductCard key={p.id} produto={p} />
+<Link
+           key={p.id}
+           href={`/produto/${p.id}`}
+           style={{ textDecoration: "none", color: "inherit" }}
+>
+<div
+             style={{ cursor: "pointer" }}
+             onMouseEnter={(e) => {
+               e.currentTarget.style.transform = "scale(1.05)";
+             }}
+             onMouseLeave={(e) => {
+               e.currentTarget.style.transform = "scale(1)";
+             }}
+>
+<ProductCard produto={p} />
+</div>
+</Link>
        ))}
 </div>
 </div>
