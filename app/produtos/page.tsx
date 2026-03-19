@@ -33,7 +33,9 @@ export default function Produtos() {
        minHeight: "100vh",
      }}
 >
-<h1>Catálogo</h1>
+<h1 style={{ textAlign: "center", fontSize: "42px" }}>
+       CATÁLOGO
+</h1>
      {/* 🔎 BUSCA */}
 <input
        placeholder="Buscar produto..."
@@ -77,23 +79,28 @@ export default function Produtos() {
        }}
 >
        {filtrados.map((p: any) => (
+<div key={p.id}>
+           {/* 🔥 SÓ IMAGEM + NOME CLICÁVEL */}
 <Link
-           key={p.id}
-           href={`/produto/${p.id}`}
-           style={{ textDecoration: "none", color: "inherit" }}
+             href={`/produto/${p.id}`}
+             style={{ textDecoration: "none", color: "inherit" }}
 >
-<div
-             style={{ cursor: "pointer" }}
-             onMouseEnter={(e) => {
-               e.currentTarget.style.transform = "scale(1.05)";
-             }}
-             onMouseLeave={(e) => {
-               e.currentTarget.style.transform = "scale(1)";
-             }}
->
-<ProductCard produto={p} />
+<div style={{ cursor: "pointer" }}>
+<img
+                 src={p.imagem}
+                 style={{
+                   width: "100%",
+                   height: "200px",
+                   objectFit: "cover",
+                   borderRadius: "10px",
+                 }}
+               />
+<h3 style={{ marginTop: "10px" }}>{p.nome}</h3>
 </div>
 </Link>
+           {/* 🔥 CARD SEM LINK */}
+<ProductCard produto={p} />
+</div>
        ))}
 </div>
 </div>
