@@ -86,7 +86,7 @@ export default function Home() {
          ★★★★★
 </h2>
 <p style={{ opacity: 0.7 }}>
-         Mais de 500 clientes satisfeitos
+         Mais de 5000 clientes satisfeitos
 </p>
 </section>
      {/* DIFERENCIAIS */}
@@ -121,7 +121,7 @@ export default function Home() {
            }}>
 <h3>{item}</h3>
 <p style={{ opacity: 0.6, fontSize: "14px" }}>
-               Experiência premium do início ao fim.
+               Experiência única do início ao fim.
 </p>
 </div>
          ))}
