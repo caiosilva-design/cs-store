@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 export default function ProdutoPage() {
  const params = useParams();
+ const router = useRouter();
  const [produto, setProduto] = useState<any>(null);
  const [tamanho, setTamanho] = useState("");
  const [qualidade, setQualidade] = useState(5);
@@ -160,6 +161,23 @@ export default function ProdutoPage() {
            }}
 >
            COMPRAR AGORA
+</button>
+         {/* PERSONALIZAR */} 
+<button
+           onClick={() => router.push(`/produto/${produto.id}/personalizar`)}
+           style={{
+             marginTop: "10px",
+             width: "100%",
+             padding: "15px",
+             background: "transparent",
+             color: "#FFD700",
+             border: "1px solid #FFD700",
+             borderRadius: "8px",
+             fontWeight: "bold",
+             cursor: "pointer",
+           }}
+>
+           PERSONALIZAR CAMISA
 </button>
          {/* 🔔 AVISE-ME */}
 <button
