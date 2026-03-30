@@ -50,6 +50,8 @@ export default function Footer() {
 </div>
 <div style={{ textAlign: "center", marginTop: "30px", color: "#666" }}>
        © 2026 CRIA STUDIO. Todos os direitos reservados.
+  <br />
+  CNPJ: 65.796.594/0001-34
 </div>
 </footer>
  );
