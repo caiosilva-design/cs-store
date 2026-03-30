@@ -22,6 +22,11 @@ export default function PersonalizarPage() {
 </div>
    );
  }
+ // 💥 VARIAÇÕES (igual página produto)
+ let variacoes = produto.variacoes || [];
+ if (produto.nome?.toLowerCase().includes("caixa")) {
+   variacoes = [{ tamanho: "Único", disponivel: true }];
+ }
  // 🛒 FINALIZAR
  const finalizar = () => {
    if (!nome || !numero || !tamanho) {
@@ -57,7 +62,6 @@ Valor: R$ ${produto.preco}`;
 >
        {/* 🖼 PREVIEW CAMISA */}
 <div>
-         {/* 🔥 TEXTO NOVO */}
 <p style={{ opacity: 0.6, fontSize: "12px", marginBottom: "10px" }}>
            Prévia ilustrativa (personalização aplicada nas costas)
 </p>
@@ -70,7 +74,7 @@ Valor: R$ ${produto.preco}`;
                borderRadius: "20px",
              }}
            />
-           {/* 🔥 NOME (AJUSTADO) */}
+           {/* NOME */}
 <div
              style={{
                position: "absolute",
@@ -87,7 +91,7 @@ Valor: R$ ${produto.preco}`;
 >
              {nome}
 </div>
-           {/* 🔥 NÚMERO (AJUSTADO) */}
+           {/* NÚMERO */}
 <div
              style={{
                position: "absolute",
@@ -136,19 +140,35 @@ Valor: R$ ${produto.preco}`;
              style={input}
            />
 </div>
-         {/* TAMANHO */}
+         {/* TAMANHO DINÂMICO */}
 <div style={{ marginTop: "20px" }}>
 <p>Tamanho</p>
-<select
-             onChange={(e) => setTamanho(e.target.value)}
-             style={input}
+<div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+             {variacoes.map((v: any, i: number) => (
+<button
+                 key={i}
+                 disabled={!v.disponivel}
+                 onClick={() => setTamanho(v.tamanho)}
+                 style={{
+                   padding: "10px 15px",
+                   borderRadius: "6px",
+                   border:
+                     tamanho === v.tamanho
+                       ? "2px solid #FFD700"
+                       : "1px solid #444",
+                   background:
+                     tamanho === v.tamanho ? "#FFD700" : "transparent",
+                   color:
+                     tamanho === v.tamanho ? "black" : "white",
+                   cursor: v.disponivel ? "pointer" : "not-allowed",
+                   opacity: v.disponivel ? 1 : 0.3,
+                   transition: "0.2s",
+                 }}
 >
-<option value="">Selecione</option>
-<option value="P">P</option>
-<option value="M">M</option>
-<option value="G">G</option>
-<option value="GG">GG</option>
-</select>
+                 {v.tamanho}
+</button>
+             ))}
+</div>
 </div>
          {/* BOTÃO */}
 <button
