@@ -1,7 +1,14 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
- images: {
-   domains: ["i0.wp.com", "playmodrop.com.br"],
- },
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
-module.exports = nextConfig;
+
+export default nextConfig;
