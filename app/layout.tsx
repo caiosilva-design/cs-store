@@ -1,10 +1,12 @@
 import "./globals.css";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { StoreProvider } from "./context/StoreContext";
 
 export const metadata = {
-  title: "CS Store",
-  description: "Camisas premium e personalizadas",
+  title: "CS Store | Camisas de Futebol Premium em São Paulo",
+  description:
+    "Camisas de futebol premium e personalizadas. Times brasileiros e internacionais, camisas tailandesas e personalizações exclusivas. Entregamos para todo o Brasil.",
 };
 
 export default function RootLayout({ children }: any) {
@@ -17,22 +19,19 @@ export default function RootLayout({ children }: any) {
           minHeight: "100vh",
         }}
       >
-        {/* 🔥 NAVBAR GLOBAL */}
-        <Navbar />
-
-        {/* 🔥 CONTEÚDO */}
-        <main
-          style={{
-            flex: 1,
-            marginTop: "80px",
-            padding: "0 16px",
-          }}
-        >
-          {children}
-        </main>
-
-        {/* 🔥 RODAPÉ */}
-        <Footer />
+        <StoreProvider>
+          <Navbar />
+          <main
+            style={{
+              flex: 1,
+              marginTop: "80px",
+              padding: "0 16px",
+            }}
+          >
+            {children}
+          </main>
+          <Footer />
+        </StoreProvider>
       </body>
     </html>
   );
