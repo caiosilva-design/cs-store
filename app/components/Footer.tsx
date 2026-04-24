@@ -1,4 +1,5 @@
 "use client";
+
 export default function Footer() {
   return (
     <footer
@@ -18,17 +19,9 @@ export default function Footer() {
           gap: "30px",
         }}
       >
-        {/* MARCA */}
         <div>
           <h2 style={{ color: "#d4af37" }}>CRIA STUDIO</h2>
-          <p
-            style={{
-              color: "#aaa",
-              maxWidth: "300px",
-              lineHeight: 1.6,
-              marginTop: "8px",
-            }}
-          >
+          <p style={{ color: "#aaa", maxWidth: "300px", lineHeight: 1.6, marginTop: "8px" }}>
             Camisas personalizadas com qualidade premium. Vista o que te
             representa com estilo único e 100% autêntico.
           </p>
@@ -36,25 +29,14 @@ export default function Footer() {
             href="https://instagram.com/criastudio.store"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              color: "#d4af37",
-              fontSize: "14px",
-              marginTop: "12px",
-              textDecoration: "none",
-            }}
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#d4af37", fontSize: "14px", marginTop: "12px", textDecoration: "none" }}
           >
             📸 @criastudio.store
           </a>
         </div>
 
-        {/* NAVEGAÇÃO */}
         <div>
-          <h4 style={{ color: "#d4af37", marginBottom: "12px" }}>
-            Navegação
-          </h4>
+          <h4 style={{ color: "#d4af37", marginBottom: "12px" }}>Navegação</h4>
           {[
             { label: "Início", href: "/" },
             { label: "Catálogo", href: "/produtos" },
@@ -63,25 +45,22 @@ export default function Footer() {
             { label: "Contato", href: "/contato" },
           ].map((item) => (
             <p key={item.href} style={{ marginBottom: "6px" }}>
-              <a href={item.href} style={linkStyle}>
+              <a href={item.href} style={{ color: "#ccc", textDecoration: "none" }}>
                 {item.label}
               </a>
             </p>
           ))}
         </div>
 
-        {/* CONTATO */}
         <div>
-          <h4 style={{ color: "#d4af37", marginBottom: "12px" }}>
-            Contato
-          </h4>
+          <h4 style={{ color: "#d4af37", marginBottom: "12px" }}>Contato</h4>
           <p style={{ marginBottom: "6px" }}>📍 São Paulo, SP</p>
           <p style={{ marginBottom: "6px" }}>
             
               href="https://wa.me/5511972734037"
               target="_blank"
               rel="noopener noreferrer"
-              style={linkStyle}
+              style={{ color: "#ccc", textDecoration: "none" }}
             >
               📞 (11) 97273-4037
             </a>
@@ -91,7 +70,7 @@ export default function Footer() {
               href="https://instagram.com/criastudio.store"
               target="_blank"
               rel="noopener noreferrer"
-              style={linkStyle}
+              style={{ color: "#ccc", textDecoration: "none" }}
             >
               📸 @criastudio.store
             </a>
@@ -99,14 +78,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: "30px",
-          color: "#666",
-          fontSize: "13px",
-        }}
-      >
+      <div style={{ textAlign: "center", marginTop: "30px", color: "#666", fontSize: "13px" }}>
         © 2026 CRIA STUDIO. Todos os direitos reservados.
         <br />
         CNPJ: 65.796.594/0001-34
@@ -114,8 +86,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-const linkStyle: React.CSSProperties = {
-  color: "#ccc",
-  textDecoration: "none",
-};
