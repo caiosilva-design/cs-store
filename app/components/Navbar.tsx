@@ -50,8 +50,8 @@ export default function Navbar() {
         {/* DESKTOP */}
         <div className="navDesktop">
           {[
-            { nome: "Início", link: "/" },
-            { nome: "Catálogo", link: "/produtos" },
+            { nome: "Inicio", link: "/" },
+            { nome: "Catalogo", link: "/produtos" },
             { nome: "Sobre", link: "/sobre" },
             { nome: "Contato", link: "/contato" },
           ].map((item) => (
@@ -71,12 +71,12 @@ export default function Navbar() {
           ))}
 
           <Link href="/favoritos" style={{ position: "relative", textDecoration: "none" }}>
-            <span style={{ fontSize: "20px", cursor: "pointer" }}>♡</span>
+            <span style={{ fontSize: "20px", cursor: "pointer", color: "white" }}>&#9825;</span>
             {favoritos.length > 0 && <span style={badgeStyle}>{favoritos.length}</span>}
           </Link>
 
           <button onClick={() => setCartOpen(true)} style={iconBtn}>
-            🛒
+            <span style={{ fontSize: "20px" }}>&#128722;</span>
             {cartCount > 0 && <span style={badgeStyle}>{cartCount}</span>}
           </button>
 
@@ -94,20 +94,20 @@ export default function Navbar() {
         {/* MOBILE */}
         <div className="navMobile">
           <Link href="/favoritos" style={{ position: "relative", textDecoration: "none", color: "white" }}>
-            <span style={{ fontSize: "22px" }}>♡</span>
+            <span style={{ fontSize: "22px" }}>&#9825;</span>
             {favoritos.length > 0 && <span style={badgeStyle}>{favoritos.length}</span>}
           </Link>
 
           <button onClick={() => setCartOpen(true)} style={iconBtn}>
-            🛒
+            <span style={{ fontSize: "22px" }}>&#128722;</span>
             {cartCount > 0 && <span style={badgeStyle}>{cartCount}</span>}
           </button>
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            style={{ background: "transparent", border: "none", color: "white", fontSize: "26px", cursor: "pointer", padding: 0 }}
+            style={{ background: "transparent", border: "none", color: "white", fontSize: "22px", cursor: "pointer", padding: 0, fontWeight: "bold" }}
           >
-            {menuOpen ? "✕" : "☰"}
+            {menuOpen ? "X" : "MENU"}
           </button>
         </div>
       </nav>
@@ -130,8 +130,8 @@ export default function Navbar() {
           }}
         >
           {[
-            { nome: "Início", link: "/" },
-            { nome: "Catálogo", link: "/produtos" },
+            { nome: "Inicio", link: "/" },
+            { nome: "Catalogo", link: "/produtos" },
             { nome: "Favoritos", link: "/favoritos" },
             { nome: "Sobre", link: "/sobre" },
             { nome: "Contato", link: "/contato" },
@@ -183,7 +183,6 @@ const iconBtn: React.CSSProperties = {
   background: "transparent",
   border: "none",
   cursor: "pointer",
-  fontSize: "20px",
   color: "white",
   padding: "0",
 };
