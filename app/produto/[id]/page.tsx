@@ -11,7 +11,6 @@ export default function ProdutoPage() {
   const [qualidade, setQualidade] = useState(5);
   const [preco, setPreco] = useState(5);
 
-  // 🔥 BUSCAR PRODUTO
   useEffect(() => {
     if (!params?.id) return;
 
@@ -23,14 +22,12 @@ export default function ProdutoPage() {
   if (!produto)
     return <div style={{ padding: "40px", color: "white" }}>Carregando...</div>;
 
-  // 💥 VARIAÇÕES
   let variacoes = produto.variacoes || [];
 
   if (produto.nome?.toLowerCase().includes("caixa")) {
     variacoes = [{ tamanho: "Único", disponivel: true }];
   }
 
-  // 🛒 COMPRAR
   const comprar = () => {
     if (!tamanho) {
       alert("Selecione o tamanho");
@@ -44,7 +41,6 @@ export default function ProdutoPage() {
     );
   };
 
-  // 🔔 AVISO
   const aviso = async () => {
     const tamanhoEscolhido =
       tamanho || prompt("Qual tamanho você quer? (P, M, G, GG)");
@@ -70,7 +66,6 @@ export default function ProdutoPage() {
     alert("🔔 Aviso cadastrado!");
   };
 
-  // ⭐ FEEDBACK
   const enviarFeedback = async () => {
     await fetch("https://cs-store-api-production.up.railway.app/feedback", {
       method: "POST",
@@ -94,6 +89,7 @@ export default function ProdutoPage() {
         color: "white",
         minHeight: "100vh",
         padding: "120px 40px",
+        userSelect: "none",
       }}
     >
       <div
@@ -107,13 +103,14 @@ export default function ProdutoPage() {
         {/* 🖼 IMAGEM */}
         <div style={{ borderRadius: "20px", overflow: "hidden" }}>
           <img
-            src={`/api/image?url=${encodeURIComponent(produto.imagem)}`}
+            src={produto.imagem}
             alt={produto.nome}
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
             style={{
               width: "100%",
               transition: "0.4s",
+              userSelect: "none",
             }}
             onMouseOver={(e) =>
               (e.currentTarget.style.transform = "scale(1.05)")
@@ -134,7 +131,6 @@ export default function ProdutoPage() {
             R$ {produto.preco}
           </h2>
 
-          {/* 📏 TAMANHOS */}
           <div style={{ marginTop: "30px" }}>
             <p style={{ marginBottom: "10px", opacity: 0.7 }}>
               Selecione o tamanho
@@ -158,7 +154,6 @@ export default function ProdutoPage() {
                     color: tamanho === v.tamanho ? "black" : "white",
                     cursor: v.disponivel ? "pointer" : "not-allowed",
                     opacity: v.disponivel ? 1 : 0.3,
-                    transition: "0.2s",
                   }}
                 >
                   {v.tamanho}
@@ -167,7 +162,6 @@ export default function ProdutoPage() {
             </div>
           </div>
 
-          {/* 🛒 COMPRAR */}
           <button
             onClick={comprar}
             style={{
@@ -180,14 +174,11 @@ export default function ProdutoPage() {
               border: "none",
               borderRadius: "8px",
               cursor: "pointer",
-              fontSize: "16px",
-              transition: "0.2s",
             }}
           >
             COMPRAR AGORA
           </button>
 
-          {/* PERSONALIZAR */}
           <button
             onClick={() =>
               router.push(`/produto/${produto.id}/personalizar`)
@@ -207,7 +198,6 @@ export default function ProdutoPage() {
             PERSONALIZAR CAMISA
           </button>
 
-          {/* 🔔 AVISE-ME */}
           <button
             onClick={aviso}
             style={{
@@ -225,11 +215,9 @@ export default function ProdutoPage() {
             Avise-me
           </button>
 
-          {/* ⭐ AVALIAÇÃO */}
           <div style={{ marginTop: "40px" }}>
             <h3>Avaliar produto</h3>
 
-            {/* QUALIDADE */}
             <div style={{ marginTop: "10px" }}>
               <p style={{ fontSize: "14px", opacity: 0.7 }}>
                 Qualidade do tecido
@@ -254,7 +242,6 @@ export default function ProdutoPage() {
               </select>
             </div>
 
-            {/* PREÇO */}
             <div style={{ marginTop: "15px" }}>
               <p style={{ fontSize: "14px", opacity: 0.7 }}>
                 Preço justo
