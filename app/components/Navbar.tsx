@@ -31,9 +31,7 @@ export default function Navbar() {
           padding: scrolled ? "12px 20px" : "20px 20px",
           background: scrolled ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.6)",
           backdropFilter: "blur(12px)",
-          borderBottom: scrolled
-            ? "1px solid rgba(255,255,255,0.08)"
-            : "1px solid transparent",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
           transition: "all 0.3s ease",
           boxSizing: "border-box",
         }}
@@ -49,17 +47,8 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* DESKTOP MENU */}
-        <div
-          style={{
-            display: "flex",
-            gap: "30px",
-            alignItems: "center",
-            fontSize: "14px",
-            letterSpacing: "1px",
-          }}
-          className="navDesktop"
-        >
+        {/* DESKTOP */}
+        <div className="navDesktop">
           {[
             { nome: "Início", link: "/" },
             { nome: "Catálogo", link: "/produtos" },
@@ -81,15 +70,11 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* FAVORITOS */}
           <Link href="/favoritos" style={{ position: "relative", textDecoration: "none" }}>
             <span style={{ fontSize: "20px", cursor: "pointer" }}>♡</span>
-            {favoritos.length > 0 && (
-              <span style={badgeStyle}>{favoritos.length}</span>
-            )}
+            {favoritos.length > 0 && <span style={badgeStyle}>{favoritos.length}</span>}
           </Link>
 
-          {/* CARRINHO */}
           <button onClick={() => setCartOpen(true)} style={iconBtn}>
             🛒
             {cartCount > 0 && <span style={badgeStyle}>{cartCount}</span>}
@@ -106,23 +91,18 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* MOBILE — ícones + hamburguer */}
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }} className="navMobile">
-          {/* FAVORITOS */}
+        {/* MOBILE */}
+        <div className="navMobile">
           <Link href="/favoritos" style={{ position: "relative", textDecoration: "none", color: "white" }}>
             <span style={{ fontSize: "22px" }}>♡</span>
-            {favoritos.length > 0 && (
-              <span style={badgeStyle}>{favoritos.length}</span>
-            )}
+            {favoritos.length > 0 && <span style={badgeStyle}>{favoritos.length}</span>}
           </Link>
 
-          {/* CARRINHO */}
           <button onClick={() => setCartOpen(true)} style={iconBtn}>
             🛒
             {cartCount > 0 && <span style={badgeStyle}>{cartCount}</span>}
           </button>
 
-          {/* HAMBURGUER */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             style={{ background: "transparent", border: "none", color: "white", fontSize: "26px", cursor: "pointer", padding: 0 }}
@@ -132,7 +112,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* MENU MOBILE DROPDOWN */}
+      {/* DROPDOWN MOBILE */}
       {menuOpen && (
         <div
           style={{
@@ -160,14 +140,7 @@ export default function Navbar() {
               key={item.nome}
               href={item.link}
               onClick={() => setMenuOpen(false)}
-              style={{
-                color: "white",
-                textDecoration: "none",
-                padding: "14px 10px",
-                fontSize: "16px",
-                borderBottom: "1px solid #1a1a1a",
-                letterSpacing: "1px",
-              }}
+              style={{ color: "white", textDecoration: "none", padding: "14px 10px", fontSize: "16px", borderBottom: "1px solid #1a1a1a", letterSpacing: "1px" }}
             >
               {item.nome}
             </Link>
@@ -177,17 +150,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
-            style={{
-              marginTop: "12px",
-              padding: "14px",
-              background: "#FFD700",
-              color: "black",
-              textDecoration: "none",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              textAlign: "center",
-              fontSize: "14px",
-            }}
+            style={{ marginTop: "12px", padding: "14px", background: "#FFD700", color: "black", textDecoration: "none", borderRadius: "8px", fontWeight: "bold", textAlign: "center", fontSize: "14px" }}
           >
             COMPRAR VIA WHATSAPP
           </a>
@@ -195,15 +158,6 @@ export default function Navbar() {
       )}
 
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
-
-      <style>{`
-        .navDesktop { display: flex !important; }
-        .navMobile { display: none !important; }
-        @media (max-width: 768px) {
-          .navDesktop { display: none !important; }
-          .navMobile { display: flex !important; }
-        }
-      `}</style>
     </>
   );
 }
