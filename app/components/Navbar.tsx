@@ -8,6 +8,7 @@ import CartDrawer from "./CartDrawer";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { cartCount, favoritos } = useStore();
 
   useEffect(() => {
@@ -27,13 +28,14 @@ export default function Navbar() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: scrolled ? "12px 40px" : "20px 40px",
+          padding: scrolled ? "12px 20px" : "20px 20px",
           background: scrolled ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.6)",
           backdropFilter: "blur(12px)",
           borderBottom: scrolled
             ? "1px solid rgba(255,255,255,0.08)"
             : "1px solid transparent",
           transition: "all 0.3s ease",
+          boxSizing: "border-box",
         }}
       >
         {/* LOGO */}
@@ -47,7 +49,7 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* MENU */}
+        {/* DESKTOP MENU */}
         <div
           style={{
             display: "flex",
@@ -56,6 +58,7 @@ export default function Navbar() {
             fontSize: "14px",
             letterSpacing: "1px",
           }}
+          className="navDesktop"
         >
           {[
             { nome: "Início", link: "/" },
@@ -66,144 +69,167 @@ export default function Navbar() {
             <Link
               key={item.nome}
               href={item.link}
-              style={{
-                position: "relative",
-                textDecoration: "none",
-                color: "white",
-              }}
+              style={{ position: "relative", textDecoration: "none", color: "white" }}
             >
               <span
                 style={{ transition: "0.3s", cursor: "pointer" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#FFD700")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "white")
-                }
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#FFD700")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
               >
                 {item.nome}
               </span>
-              <span
-                style={{
-                  position: "absolute",
-                  bottom: "-6px",
-                  left: 0,
-                  width: "0%",
-                  height: "2px",
-                  background: "#FFD700",
-                  transition: "0.3s",
-                }}
-                className="underline"
-              />
             </Link>
           ))}
 
           {/* FAVORITOS */}
-          <Link
-            href="/favoritos"
-            style={{ position: "relative", textDecoration: "none" }}
-          >
-            <span
-              style={{ fontSize: "20px", cursor: "pointer" }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.opacity = "0.7")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.opacity = "1")
-              }
-            >
-              ♡
-            </span>
+          <Link href="/favoritos" style={{ position: "relative", textDecoration: "none" }}>
+            <span style={{ fontSize: "20px", cursor: "pointer" }}>♡</span>
             {favoritos.length > 0 && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: "-6px",
-                  right: "-8px",
-                  background: "#FFD700",
-                  color: "black",
-                  borderRadius: "50%",
-                  width: "16px",
-                  height: "16px",
-                  fontSize: "10px",
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {favoritos.length}
-              </span>
+              <span style={badgeStyle}>{favoritos.length}</span>
             )}
           </Link>
 
           {/* CARRINHO */}
-          <button
-            onClick={() => setCartOpen(true)}
-            style={{
-              position: "relative",
-              background: "transparent",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "20px",
-              color: "white",
-              padding: "0",
-            }}
-          >
+          <button onClick={() => setCartOpen(true)} style={iconBtn}>
             🛒
-            {cartCount > 0 && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: "-6px",
-                  right: "-8px",
-                  background: "#FFD700",
-                  color: "black",
-                  borderRadius: "50%",
-                  width: "16px",
-                  height: "16px",
-                  fontSize: "10px",
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {cartCount}
-              </span>
-            )}
+            {cartCount > 0 && <span style={badgeStyle}>{cartCount}</span>}
           </button>
 
-          {/* BOTÃO CTA */}
           <Link href="/produtos">
             <button
-              style={{
-                padding: "8px 18px",
-                background: "#FFD700",
-                color: "black",
-                border: "none",
-                borderRadius: "20px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                transition: "0.3s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.boxShadow =
-                  "0 0 15px rgba(255,215,0,0.6)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
+              style={{ padding: "8px 18px", background: "#FFD700", color: "black", border: "none", borderRadius: "20px", fontWeight: "bold", cursor: "pointer" }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 0 15px rgba(255,215,0,0.6)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none"; }}
             >
               Comprar
             </button>
           </Link>
         </div>
+
+        {/* MOBILE — ícones + hamburguer */}
+        <div style={{ display: "flex", alignItems: "center", gap: "16px" }} className="navMobile">
+          {/* FAVORITOS */}
+          <Link href="/favoritos" style={{ position: "relative", textDecoration: "none", color: "white" }}>
+            <span style={{ fontSize: "22px" }}>♡</span>
+            {favoritos.length > 0 && (
+              <span style={badgeStyle}>{favoritos.length}</span>
+            )}
+          </Link>
+
+          {/* CARRINHO */}
+          <button onClick={() => setCartOpen(true)} style={iconBtn}>
+            🛒
+            {cartCount > 0 && <span style={badgeStyle}>{cartCount}</span>}
+          </button>
+
+          {/* HAMBURGUER */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{ background: "transparent", border: "none", color: "white", fontSize: "26px", cursor: "pointer", padding: 0 }}
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
       </nav>
 
+      {/* MENU MOBILE DROPDOWN */}
+      {menuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "64px",
+            left: 0,
+            width: "100%",
+            background: "rgba(0,0,0,0.97)",
+            zIndex: 998,
+            display: "flex",
+            flexDirection: "column",
+            padding: "20px",
+            gap: "4px",
+            borderBottom: "1px solid #222",
+          }}
+        >
+          {[
+            { nome: "Início", link: "/" },
+            { nome: "Catálogo", link: "/produtos" },
+            { nome: "Favoritos", link: "/favoritos" },
+            { nome: "Sobre", link: "/sobre" },
+            { nome: "Contato", link: "/contato" },
+          ].map((item) => (
+            <Link
+              key={item.nome}
+              href={item.link}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                color: "white",
+                textDecoration: "none",
+                padding: "14px 10px",
+                fontSize: "16px",
+                borderBottom: "1px solid #1a1a1a",
+                letterSpacing: "1px",
+              }}
+            >
+              {item.nome}
+            </Link>
+          ))}
+          
+            href="https://wa.me/5511972734037"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              marginTop: "12px",
+              padding: "14px",
+              background: "#FFD700",
+              color: "black",
+              textDecoration: "none",
+              borderRadius: "8px",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: "14px",
+            }}
+          >
+            COMPRAR VIA WHATSAPP
+          </a>
+        </div>
+      )}
+
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+
+      <style>{`
+        .navDesktop { display: flex !important; }
+        .navMobile { display: none !important; }
+        @media (max-width: 768px) {
+          .navDesktop { display: none !important; }
+          .navMobile { display: flex !important; }
+        }
+      `}</style>
     </>
   );
 }
+
+const badgeStyle: React.CSSProperties = {
+  position: "absolute",
+  top: "-6px",
+  right: "-8px",
+  background: "#FFD700",
+  color: "black",
+  borderRadius: "50%",
+  width: "16px",
+  height: "16px",
+  fontSize: "10px",
+  fontWeight: "bold",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const iconBtn: React.CSSProperties = {
+  position: "relative",
+  background: "transparent",
+  border: "none",
+  cursor: "pointer",
+  fontSize: "20px",
+  color: "white",
+  padding: "0",
+};
