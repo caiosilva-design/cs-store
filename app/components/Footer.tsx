@@ -43,10 +43,7 @@ export default function Footer() {
               fontSize: "14px",
               marginTop: "12px",
               textDecoration: "none",
-              transition: "opacity 0.2s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
             📸 @criastudio.store
           </a>
@@ -120,5 +117,4 @@ export default function Footer() {
 const linkStyle: React.CSSProperties = {
   color: "#ccc",
   textDecoration: "none",
-  transition: "color 0.2s",
 };
