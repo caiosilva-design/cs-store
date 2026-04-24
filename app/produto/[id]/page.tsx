@@ -89,7 +89,6 @@ export default function ProdutoPage() {
         color: "white",
         minHeight: "100vh",
         padding: "120px 40px",
-        userSelect: "none",
       }}
     >
       <div
@@ -100,17 +99,16 @@ export default function ProdutoPage() {
           alignItems: "center",
         }}
       >
-        {/* 🖼 IMAGEM */}
+        {/* IMAGEM */}
         <div style={{ borderRadius: "20px", overflow: "hidden" }}>
           <img
-            src={produto.imagem}
+            src={`/api/image?url=${encodeURIComponent(produto.imagem)}`}
             alt={produto.nome}
             draggable={false}
             onContextMenu={(e) => e.preventDefault()}
             style={{
               width: "100%",
               transition: "0.4s",
-              userSelect: "none",
             }}
             onMouseOver={(e) =>
               (e.currentTarget.style.transform = "scale(1.05)")
@@ -121,7 +119,7 @@ export default function ProdutoPage() {
           />
         </div>
 
-        {/* 📦 INFO */}
+        {/* RESTO IGUAL */}
         <div>
           <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
             {produto.nome}
