@@ -1,10 +1,7 @@
 export default function WhatsappButton() {
-  const msg =
-    "Ol%C3%A1%21+Vi+o+site+da+CS+Store+e+gostaria+de+saber+mais+sobre+os+produtos.";
-
   return (
     
-      href={"https://wa.me/5511972734037?text=" + msg}
+      href="https://wa.me/5511972734037?text=Ol%C3%A1%21+Vi+o+site+da+CS+Store+e+gostaria+de+saber+mais."
       target="_blank"
       rel="noopener noreferrer"
       title="Falar no WhatsApp"
