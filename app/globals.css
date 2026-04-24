@@ -209,9 +209,32 @@ p {
  line-height: 1.6;
 }
 /* ========================= */
+/* NAVBAR RESPONSIVA */
+/* ========================= */
+.navDesktop {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.navMobile {
+  display: none;
+  align-items: center;
+  gap: 16px;
+}
+@media (max-width: 768px) {
+  .navDesktop {
+    display: none !important;
+  }
+  .navMobile {
+    display: flex !important;
+  }
+}
 /* LINKS */
 /* ========================= */
 a {
  text-decoration: none;
  color: inherit;
 }
+/* ========================= */
