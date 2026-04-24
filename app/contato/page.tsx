@@ -73,7 +73,7 @@ export default function Contato() {
 <button className="btnOutline">Instagram</button>
 </a>
 <a
-         href="https://drive.google.com/drive/folders/10KpOvWFRqXSpGgmhmOVFgu4On6zPc9yz"
+         href="https://catalogo-store.vercel.app/"
          target="_blank"
 >
 <button className="btnOutline">Catálogo Drive</button>
