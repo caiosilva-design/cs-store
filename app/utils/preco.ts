@@ -23,7 +23,7 @@ export type Preco = {
  */
 export function deveExibirProduto(nome: string): boolean {
   const n = nome.toLowerCase();
-  return !n.includes("drop") && !n.includes("vip") && !n.includes("UPGRADE");
+  return !n.includes("drop") && !n.includes("vip") && !n.includes("upgrade");
 }
 
 export function calcularPreco(nome: string): Preco {
