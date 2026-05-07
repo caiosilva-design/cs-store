@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { calcularPreco } from "./utils/preco";
+import { calcularPreco, deveExibirProduto } from "./utils/preco";
 import WhatsappButton from "./components/WhatsappButton";
 
 export default async function Home() {
@@ -8,7 +8,9 @@ export default async function Home() {
     { cache: "no-store" }
   );
   const produtos = await res.json();
-  const destaques = produtos.filter((p: any) => [148, 24, 75].includes(p.id));
+  const destaques = produtos
+    .filter((p: any) => [148, 24, 75].includes(p.id))
+    .filter((p: any) => deveExibirProduto(p.nome));
 
   return (
     <main style={{ color: "white", background: "#000" }}>
