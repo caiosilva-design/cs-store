@@ -8,7 +8,7 @@
  * - Demais: R$ 120 → R$ 90 promo
  *
  * Regras de exibição:
- * - Produtos com "drop" ou "vip" no nome NÃO devem ser exibidos no site
+ * - Produtos com "drop", "vip" ou "UPGRADE" no nome NÃO devem ser exibidos no site
  */
 
 export type Preco = {
@@ -23,7 +23,7 @@ export type Preco = {
  */
 export function deveExibirProduto(nome: string): boolean {
   const n = nome.toLowerCase();
-  return !n.includes("drop") && !n.includes("vip");
+  return !n.includes("drop") && !n.includes("vip") && !n.includes("UPGRADE");
 }
 
 export function calcularPreco(nome: string): Preco {
