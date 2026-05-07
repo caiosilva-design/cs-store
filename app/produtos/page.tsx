@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { deveExibirProduto } from "../utils/preco";
 
 export default function Produtos() {
   const [produtos, setProdutos] = useState([]);
@@ -18,6 +19,7 @@ export default function Produtos() {
   }, []);
 
   const filtrados = produtos.filter((p: any) => {
+    if (!deveExibirProduto(p.nome)) return false;
     const matchNome = p.nome?.toLowerCase().includes(busca.toLowerCase());
     const matchTamanho = tamanhoFiltro
       ? p.variacoes?.some(
