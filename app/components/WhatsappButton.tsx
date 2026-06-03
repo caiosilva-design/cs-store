@@ -3,7 +3,7 @@
 export default function WhatsappButton() {
   return (
     
-     <a href="https://wa.me/5511972734037?text=Ola%21+Vi+o+site+da+CS+Store+e+gostaria+de+saber+mais."
+     <a href="https://wa.me/5511918610456?text=Ola%21+Vi+o+site+da+CS+Store+e+gostaria+de+saber+mais."
       target="_blank"
       rel="noopener noreferrer"
       style={{
