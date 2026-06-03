@@ -273,7 +273,7 @@ export default async function Home() {
         <p style={{ margin: "20px 0", opacity: 0.7 }}>
           Personalize agora e receba em casa.
         </p>
-        <a href="https://wa.me/5511972734037?text=Ol%C3%A1%21+Quero+fazer+um+pedido+na+CS+Store">
+        <a href="https://wa.me/5511918610456?text=Ol%C3%A1%21+Quero+fazer+um+pedido+na+CS+Store">
           <button className="btnGold">FALAR NO WHATSAPP →</button>
         </a>
       </section>
