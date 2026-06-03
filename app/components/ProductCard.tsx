@@ -2,14 +2,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useStore } from "../context/StoreContext";
-import { calcularPreco } from "../utils/preco";
 
 export default function ProductCard({ produto }: any) {
   const [tamanho, setTamanho] = useState("");
   const [adicionado, setAdicionado] = useState(false);
   const { addToCart, toggleFavorito, isFavorito } = useStore();
   const favorito = isFavorito(produto.id);
-  const { original, promo, emPromocao } = calcularPreco(produto.nome);
+
+  const preco = produto.preco;
+  const precoAntigo = produto.preco_antigo;
+  const emPromocao = precoAntigo && precoAntigo > preco;
 
   let variacoes = produto.variacoes || [];
   if (produto.nome.toLowerCase().includes("caixa")) {
@@ -21,7 +23,7 @@ export default function ProductCard({ produto }: any) {
       alert("Selecione o tamanho");
       return;
     }
-    addToCart({ ...produto, preco: promo }, tamanho);
+    addToCart({ ...produto, preco }, tamanho);
     setAdicionado(true);
     setTimeout(() => setAdicionado(false), 2000);
   };
@@ -31,7 +33,7 @@ export default function ProductCard({ produto }: any) {
       alert("Selecione o tamanho");
       return;
     }
-    const texto = `Quero comprar: ${produto.nome} | Tamanho: ${tamanho} | Valor: R$ ${promo}`;
+    const texto = `Quero comprar: ${produto.nome} | Tamanho: ${tamanho} | Valor: R$ ${preco}`;
     window.open(
       `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`
     );
@@ -113,7 +115,7 @@ export default function ProductCard({ produto }: any) {
         </div>
       )}
 
-      {/* IMAGEM — via proxy para esconder domínio do fornecedor */}
+      {/* IMAGEM */}
       <Link href={`/produto/${produto.id}`}>
         <img
           src={`/api/image?url=${encodeURIComponent(produto.imagem)}`}
@@ -144,15 +146,6 @@ export default function ProductCard({ produto }: any) {
 
         {/* PREÇO */}
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <p
-            style={{
-              color: "#FFD700",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
-          >
-            R$ {promo}
-          </p>
           {emPromocao && (
             <p
               style={{
@@ -161,9 +154,18 @@ export default function ProductCard({ produto }: any) {
                 fontSize: "13px",
               }}
             >
-              R$ {original}
+              R$ {precoAntigo}
             </p>
           )}
+          <p
+            style={{
+              color: "#FFD700",
+              fontWeight: "bold",
+              fontSize: "16px",
+            }}
+          >
+            R$ {preco}
+          </p>
         </div>
 
         {/* TAMANHO */}
