@@ -77,7 +77,7 @@ export default async function Home() {
                 VER CATÁLOGO
               </button>
             </Link>
-            <a href="https://wa.me/5511972734037?text=Ol%C3%A1%21+Quero+personalizar+uma+camisa">
+            <a href="https://wa.me/5511918610456?text=Ol%C3%A1%21+Quero+personalizar+uma+camisa">
               <button
                 style={{
                   background: "transparent",
