@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { calcularPreco } from "../../../utils/preco";
 
 export default function PersonalizarPage() {
   const params = useParams();
@@ -30,7 +29,7 @@ export default function PersonalizarPage() {
     variacoes = [{ tamanho: "Único", disponivel: true }];
   }
 
-  const { promo } = calcularPreco(produto.nome);
+  const promo = produto.preco;
 
   const finalizar = () => {
     if (!nome || !numero || !tamanho) {
