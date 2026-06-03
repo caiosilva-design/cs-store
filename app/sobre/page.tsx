@@ -137,7 +137,7 @@ export default function Sobre() {
 <button className="btnGold">Ver Catálogo</button>
 </Link>
 <a
-           href="https://wa.me/5511972734037"
+           href="https://wa.me/551918610456"
            target="_blank"
            style={{ marginLeft: "10px" }}
 >
