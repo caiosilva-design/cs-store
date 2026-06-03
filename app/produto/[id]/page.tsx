@@ -56,7 +56,7 @@ export default function ProdutoPage() {
     }
     const texto = `Quero comprar: ${produto.nome} | Tamanho: ${tamanho} | Valor: R$ ${promo}`;
     window.open(
-      `https://wa.me/5511972734037?text=${encodeURIComponent(texto)}`
+      `https://wa.me/5511918610456?text=${encodeURIComponent(texto)}`
     );
   };
 
