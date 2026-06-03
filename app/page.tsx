@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { calcularPreco, deveExibirProduto } from "./utils/preco";
+import { deveExibirProduto } from "./utils/preco";
 import WhatsappButton from "./components/WhatsappButton";
 
 export default async function Home() {
@@ -181,7 +181,9 @@ export default async function Home() {
           }}
         >
           {destaques.map((item: any) => {
-            const { promo, original, emPromocao } = calcularPreco(item.nome);
+            const promo = item.preco;
+            const original = item.preco_antigo;
+            const emPromocao = original && original > promo;
             return (
               <Link
                 key={item.id}
