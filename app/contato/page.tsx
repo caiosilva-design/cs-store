@@ -61,7 +61,7 @@ export default function Contato() {
        }}
 >
 <a
-         href="https://wa.me/5511972734037"
+         href="https://wa.me/5511918610456"
          target="_blank"
 >
 <button className="btnGold">WhatsApp</button>
