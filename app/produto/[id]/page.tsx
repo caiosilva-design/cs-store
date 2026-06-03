@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useStore } from "../../context/StoreContext";
-import { calcularPreco } from "../../utils/preco";
 
 export default function ProdutoPage() {
   const params = useParams();
@@ -35,7 +34,9 @@ export default function ProdutoPage() {
     variacoes = [{ tamanho: "Único", disponivel: true }];
   }
 
-  const { original, promo, emPromocao } = calcularPreco(produto.nome);
+  const promo = produto.preco;
+  const original = produto.preco_antigo;
+  const emPromocao = original && original > promo;
   const favorito = isFavorito(produto.id);
 
   const handleAddToCart = () => {
