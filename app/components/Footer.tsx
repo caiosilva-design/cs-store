@@ -35,7 +35,7 @@ export default function Footer() {
           <p style={{ marginBottom: "6px" }}>📍 São Paulo, SP</p>
           <p style={{ marginBottom: "6px" }}>
             <a href="https://wa.me/5511972734037" target="_blank" rel="noopener noreferrer" style={{ color: "#ccc", textDecoration: "none" }}>
-              📞 (11) 97273-4037
+              📞 (11) 91861-0456
             </a>
           </p>
           <p>
