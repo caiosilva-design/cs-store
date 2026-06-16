@@ -53,17 +53,26 @@ Valor: R$ ${promo}`;
         background: "#000",
         color: "white",
         minHeight: "100vh",
-        padding: "120px 40px",
+        padding: "100px 20px 60px",
       }}
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "60px",
-          alignItems: "center",
-        }}
-      >
+      <style>{`
+        .personalizar-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: start;
+          max-width: 1100px;
+          margin: auto;
+        }
+        @media (max-width: 768px) {
+          .personalizar-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+          }
+        }
+      `}</style>
+      <div className="personalizar-grid">
         {/* PREVIEW CAMISA */}
         <div>
           <p
