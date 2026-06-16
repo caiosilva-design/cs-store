@@ -14,6 +14,73 @@ export default async function Home() {
 
   return (
     <main style={{ color: "white", background: "#000" }}>
+      <style>{`
+        .hero-title {
+          font-size: 70px;
+          font-weight: bold;
+          line-height: 1.1;
+        }
+        .hero-subtitle {
+          margin-top: 20px;
+          opacity: 0.7;
+          font-size: 18px;
+        }
+        .hero-buttons {
+          margin-top: 30px;
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .cta-title {
+          font-size: 60px;
+        }
+        .diferenciais-grid {
+          display: flex;
+          justify-content: center;
+          gap: 30px;
+          flex-wrap: wrap;
+        }
+        .diferencial-card {
+          width: 260px;
+          padding: 30px;
+          border-radius: 12px;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+        .destaques-grid {
+          margin-top: 50px;
+          display: flex;
+          justify-content: center;
+          gap: 30px;
+          flex-wrap: wrap;
+        }
+        .sobre-title {
+          font-size: 50px;
+        }
+        @media (max-width: 768px) {
+          .hero-title {
+            font-size: 38px;
+          }
+          .hero-subtitle {
+            font-size: 15px;
+          }
+          .cta-title {
+            font-size: 30px;
+          }
+          .sobre-title {
+            font-size: 32px;
+          }
+          .diferencial-card {
+            width: 100%;
+            max-width: 320px;
+          }
+          .destaques-grid {
+            gap: 16px;
+          }
+        }
+      `}</style>
+
       {/* HERO */}
       <section
         style={{
@@ -32,35 +99,17 @@ export default async function Home() {
         }}
       >
         <div>
-          <p
-            style={{
-              color: "#FFD700",
-              letterSpacing: "3px",
-              fontSize: "14px",
-            }}
-          >
+          <p style={{ color: "#FFD700", letterSpacing: "3px", fontSize: "14px" }}>
             NOVA COLEÇÃO 2026
           </p>
-          <h1
-            style={{
-              fontSize: "70px",
-              fontWeight: "bold",
-              lineHeight: "1.1",
-            }}
-          >
+          <h1 className="hero-title">
             VISTA O <br />
             <span style={{ color: "#FFD700" }}>QUE TE REPRESENTA</span>
           </h1>
-          <p
-            style={{
-              marginTop: "20px",
-              opacity: 0.7,
-              fontSize: "18px",
-            }}
-          >
+          <p className="hero-subtitle">
             Camisas premium. Estilo único. Identidade própria.
           </p>
-          <div style={{ marginTop: "30px" }}>
+          <div className="hero-buttons">
             <Link href="/produtos">
               <button
                 style={{
@@ -69,7 +118,6 @@ export default async function Home() {
                   padding: "15px 30px",
                   border: "none",
                   borderRadius: "8px",
-                  marginRight: "10px",
                   fontWeight: "bold",
                   cursor: "pointer",
                 }}
@@ -97,32 +145,19 @@ export default async function Home() {
       </section>
 
       {/* AVALIAÇÃO */}
-      <section style={{ padding: "100px 20px", textAlign: "center" }}>
-        <h2
-          style={{
-            fontSize: "30px",
-            color: "#FFD700",
-            letterSpacing: "6px",
-          }}
-        >
+      <section style={{ padding: "80px 20px", textAlign: "center" }}>
+        <h2 style={{ fontSize: "30px", color: "#FFD700", letterSpacing: "6px" }}>
           ★★★★★
         </h2>
         <p style={{ opacity: 0.7 }}>Mais de 5000 clientes satisfeitos</p>
       </section>
 
       {/* DIFERENCIAIS */}
-      <section style={{ padding: "100px 20px", textAlign: "center" }}>
+      <section style={{ padding: "80px 20px", textAlign: "center" }}>
         <h2 style={{ fontSize: "40px", marginBottom: "50px" }}>
           Por que escolher a CS Store?
         </h2>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "30px",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="diferenciais-grid">
           {[
             {
               icone: "🏆",
@@ -140,27 +175,10 @@ export default async function Home() {
               desc: "Coloque seu nome e número em qualquer camisa. Designs únicos criados especialmente para você.",
             },
           ].map((item, i) => (
-            <div
-              key={i}
-              style={{
-                width: "260px",
-                padding: "30px",
-                borderRadius: "12px",
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              <p style={{ fontSize: "30px", marginBottom: "10px" }}>
-                {item.icone}
-              </p>
+            <div key={i} className="diferencial-card">
+              <p style={{ fontSize: "30px", marginBottom: "10px" }}>{item.icone}</p>
               <h3 style={{ marginBottom: "10px" }}>{item.titulo}</h3>
-              <p
-                style={{
-                  opacity: 0.6,
-                  fontSize: "14px",
-                  lineHeight: 1.6,
-                }}
-              >
+              <p style={{ opacity: 0.6, fontSize: "14px", lineHeight: 1.6 }}>
                 {item.desc}
               </p>
             </div>
@@ -169,27 +187,15 @@ export default async function Home() {
       </section>
 
       {/* DESTAQUES */}
-      <section style={{ padding: "100px 20px", textAlign: "center" }}>
+      <section style={{ padding: "80px 20px", textAlign: "center" }}>
         <h2 style={{ fontSize: "40px" }}>Destaques da semana</h2>
-        <div
-          style={{
-            marginTop: "50px",
-            display: "flex",
-            justifyContent: "center",
-            gap: "30px",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="destaques-grid">
           {destaques.map((item: any) => {
             const promo = item.preco;
             const original = item.preco_antigo;
             const emPromocao = original && original > promo;
             return (
-              <Link
-                key={item.id}
-                href={`/produto/${item.id}`}
-                className="cardProduto"
-              >
+              <Link key={item.id} href={`/produto/${item.id}`} className="cardProduto">
                 <img
                   src={`/api/image?url=${encodeURIComponent(item.imagem)}`}
                   alt={item.nome}
@@ -214,24 +220,10 @@ export default async function Home() {
                   </div>
                 )}
                 <span>{item.nome}</span>
-                <div
-                  className="preco"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                  }}
-                >
+                <div className="preco" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   R$ {promo}
                   {emPromocao && (
-                    <span
-                      style={{
-                        textDecoration: "line-through",
-                        color: "#aaa",
-                        fontSize: "13px",
-                        fontWeight: "normal",
-                      }}
-                    >
+                    <span style={{ textDecoration: "line-through", color: "#aaa", fontSize: "13px", fontWeight: "normal" }}>
                       R$ {original}
                     </span>
                   )}
@@ -245,31 +237,25 @@ export default async function Home() {
       {/* SOBRE */}
       <section
         style={{
-          padding: "120px 20px",
+          padding: "100px 20px",
           textAlign: "center",
           maxWidth: "800px",
           margin: "auto",
         }}
       >
-        <h2 style={{ fontSize: "50px" }}>
+        <h2 className="sobre-title">
           Mais que uma marca,<br />
           <span style={{ color: "#FFD700" }}>um estúdio</span>
         </h2>
-        <p
-          style={{
-            marginTop: "20px",
-            fontSize: "18px",
-            opacity: 0.7,
-          }}
-        >
+        <p style={{ marginTop: "20px", fontSize: "18px", opacity: 0.7 }}>
           Criamos camisetas com identidade, estilo e personalidade para
           quem vive o futebol dentro e fora de campo.
         </p>
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "120px 20px", textAlign: "center" }}>
-        <h2 style={{ fontSize: "60px" }}>PRONTO PARA ENTRAR EM CAMPO?</h2>
+      <section style={{ padding: "100px 20px", textAlign: "center" }}>
+        <h2 className="cta-title">PRONTO PARA ENTRAR EM CAMPO?</h2>
         <p style={{ margin: "20px 0", opacity: 0.7 }}>
           Personalize agora e receba em casa.
         </p>
