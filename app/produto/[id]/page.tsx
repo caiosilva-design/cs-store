@@ -98,17 +98,26 @@ export default function ProdutoPage() {
         background: "#000",
         color: "white",
         minHeight: "100vh",
-        padding: "120px 40px",
+        padding: "100px 20px 60px",
       }}
     >
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "60px",
-          alignItems: "center",
-        }}
-      >
+      <style>{`
+        .produto-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: start;
+          max-width: 1100px;
+          margin: auto;
+        }
+        @media (max-width: 768px) {
+          .produto-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+          }
+        }
+      `}</style>
+      <div className="produto-grid">
         {/* IMAGEM */}
         <div style={{ borderRadius: "20px", overflow: "hidden", position: "relative" }}>
           {emPromocao && (
