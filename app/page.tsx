@@ -9,7 +9,7 @@ export default async function Home() {
   );
   const produtos = await res.json();
   const destaques = produtos
-    .filter((p: any) => [148, 24, 75].includes(p.id))
+    .filter((p: any) => [1473076, 1463554, 1463584].includes(p.id))
     .filter((p: any) => deveExibirProduto(p.nome));
 
   return (
